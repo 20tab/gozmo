@@ -190,6 +190,41 @@ func (animator *Animator) GetAnimation() string {
 	return animator.currentAnimation
 }
 
+func (animator *Animator) SetAttr(attr string, value interface{}) error {
+	switch attr {
+	case "play":
+		state, ok := value.(bool)
+		if ok {
+			if state {
+				animator.Play()
+			} else {
+				animator.Stop()
+			}
+			return nil
+		}
+		return fmt.Errorf("%v attribute of %T expects a bool", attr, animator)
+	case "animation":
+		animation, ok := value.(string)
+		if ok {
+			animator.SetAnimation(value.(string))
+			return nil
+		}
+		return fmt.Errorf("%v attribute of %T expects a string", attr, animator)
+	}
+	return nil
+}
+
+func (animator *Animator) GetAttr(attr string) (interface{}, error) {
+	switch attr {
+        case "animation":
+                return animator.GetAnimation(), nil
+        case "play":
+                return animator.IsPlaying, nil
+        }
+        return nil, fmt.Errorf("%v attribute of %T not found", attr, animator)
+
+}
+
 func initAnimator(args []interface{}) Component {
 	return NewAnimator()
 }

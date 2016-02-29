@@ -11,6 +11,7 @@ When a scene is destroyed, all of the allocated resources and GameObjects are de
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 )
 
@@ -123,7 +124,10 @@ func setAttrs(gameObject *GameObject, attrs []interface{}) {
 			panic("attr requires a value")
 		}
 
-		gameObject.SetAttr(component.(string), key.(string), value)
+		err := gameObject.SetAttr(component.(string), key.(string), value)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 
