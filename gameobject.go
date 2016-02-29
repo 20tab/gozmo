@@ -91,89 +91,29 @@ func (gameObject *GameObject) GetComponent(name string) interface{} {
 func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	switch attr {
 	case "positionX":
-		x, ok := value.(float32)
-		if ok {
-			gameObject.Position[0] = x
-			return nil
-		}
-		x64, ok := value.(float64)
-		if ok {
-			gameObject.Position[0] = float32(x64)
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a float32", attr, gameObject)
+		gameObject.Position[0], _ = CastFloat32(value)
+		return nil
 	case "positionY":
-		y, ok := value.(float32)
-		if ok {
-			gameObject.Position[1] = y
-			return nil
-		}
-		y64, ok := value.(float64)
-		if ok {
-			gameObject.Position[1] = float32(y64)
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a float32", attr, gameObject)
+		gameObject.Position[1], _ = CastFloat32(value)
+		return nil
 	case "positionAddX":
-		x, ok := value.(float32)
-		if ok {
-			gameObject.Position[0] += x
-			return nil
-		}
-		x64, ok := value.(float64)
-		if ok {
-			gameObject.Position[0] += float32(x64)
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a float32", attr, gameObject)
+		x, _ := CastFloat32(value)
+		gameObject.Position[0] += x
+		return nil
 	case "positionAddY":
-		y, ok := value.(float32)
-		if ok {
-			gameObject.Position[1] += y
-			return nil
-		}
-		y64, ok := value.(float64)
-		if ok {
-			gameObject.Position[1] = float32(y64)
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a float32", attr, gameObject)
+		y, _ := CastFloat32(value)
+		gameObject.Position[1] += y
+		return nil
 	case "scaleX":
-		x, ok := value.(float32)
-		if ok {
-			gameObject.Scale[0] = x
-			return nil
-		}
-		x64, ok := value.(float64)
-		if ok {
-			gameObject.Scale[0] = float32(x64)
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a float32", attr, gameObject)
+		gameObject.Scale[0], _ = CastFloat32(value)
+                return nil
 	case "scaleY":
-		y, ok := value.(float32)
-		if ok {
-			gameObject.Scale[1] = y
-			return nil
-		}
-		y64, ok := value.(float64)
-		if ok {
-			gameObject.Scale[1] = float32(y64)
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a float32", attr, gameObject)
+		gameObject.Scale[1], _ = CastFloat32(value)
+                return nil
 	case "euler":
-		r, ok := value.(float32)
-		if ok {
-			gameObject.SetEuler(r)
-			return nil
-		}
-		r64, ok := value.(float64)
-		if ok {
-			gameObject.SetEuler(float32(r64))
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a float32", attr, gameObject)
+		r, _ := CastFloat32(value)
+		gameObject.SetEuler(r)
+		return nil
 	case "name":
 		name, ok := value.(string)
 		if ok {

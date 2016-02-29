@@ -138,22 +138,12 @@ func (renderer *Renderer) SetPixelsPerUnit(pixels uint32) {
 func (renderer *Renderer) SetAttr(attr string, value interface{}) error {
 	switch attr {
 	case "index":
-		index, ok := value.(uint32)
-		if ok {
+		index, err := CastUInt32(value) 
+		if err == nil {
 			renderer.index = index
 			return nil
 		}
-		index64, ok := value.(uint64)
-		if ok {
-			renderer.index = uint32(index64)
-			return nil
-		}
-		indexf64, ok := value.(float64)
-		if ok {
-			renderer.index = uint32(indexf64)
-			return nil
-		}
-		return fmt.Errorf("%v attribute of %T expects a uint32", attr, renderer)
+		return fmt.Errorf("%v attribute of %T", attr, renderer, err)
 	case "texture":
 		textureName, ok := value.(string)
 		if ok {
