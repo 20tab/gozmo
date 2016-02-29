@@ -9,18 +9,18 @@ of registered components
 */
 
 type EngineSingleton struct {
-    registeredComponents map[string]*RegisteredComponent
+	registeredComponents map[string]*RegisteredComponent
 }
 
 var Engine EngineSingleton
 
 func RegisterComponent(name string, generator func([]interface{}) Component) {
-    // create the map if required
-    if Engine.registeredComponents == nil {
-        Engine.registeredComponents = make(map[string]*RegisteredComponent)
-    }
+	// create the map if required
+	if Engine.registeredComponents == nil {
+		Engine.registeredComponents = make(map[string]*RegisteredComponent)
+	}
 
-    rc := RegisteredComponent{Name: name, Init: generator}
+	rc := RegisteredComponent{Name: name, Init: generator}
 
-    Engine.registeredComponents[name] = &rc
+	Engine.registeredComponents[name] = &rc
 }
