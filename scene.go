@@ -154,6 +154,56 @@ func loadObjects(scene *Scene, objects []interface{}) {
 	}
 }
 
+func loadAnimations(scene *Scene, animations []interface{}) {
+	for _, anim := range animations {
+		animMap := anim.(map[string]interface{})
+
+		name, ok := animMap["name"]
+		if !ok {
+			panic("animation requires a name")
+		}
+
+		fps, hasFps := animMap["fps"]
+		loop, hasLoop := animMap["loop"]
+
+		frames, hasFrames := animMap["frames"]
+
+		animation := scene.AddAnimation(name.(string), 0, false)
+
+		if hasFps {
+			animation.Fps = int(fps.(float64))
+		}
+
+		if hasLoop {
+			animation.Loop = loop.(bool)
+		}
+
+		if hasFrames {
+			var actionsList []*AnimationAction
+			for _, frame := range frames.([]interface{}) {
+				actions := frame.([]interface{})
+				for _, action := range actions {
+					actionMap := action.(map[string]interface{})
+					component, ok := actionMap["component"]
+					if !ok {
+						panic("animation action requires a component")
+					}
+					key, ok := actionMap["key"]
+					if !ok {
+						panic("animation action requires a key")
+					}
+					value, ok := actionMap["value"]
+					if !ok {
+						panic("animation action requires a value")
+					}
+					actionsList = append(actionsList, &AnimationAction{ComponentName: component.(string), Attr: key.(string), Value: value})
+				}
+			}
+			animation.AddFrame(actionsList)
+		}
+	}
+}
+
 func (window *Window) NewSceneFilename(fileName string) *Scene {
 	scene := window.NewScene()
 	data, err := ioutil.ReadFile(fileName)
@@ -178,6 +228,9 @@ func (window *Window) NewSceneFilename(fileName string) *Scene {
 		case "objects":
 			objects := value.([]interface{})
 			loadObjects(scene, objects)
+		case "animations":
+			animations := value.([]interface{})
+			loadAnimations(scene, animations)
 		}
 	}
 

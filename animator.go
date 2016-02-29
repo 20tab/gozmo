@@ -31,7 +31,7 @@ func (animator *Animator) Update(gameObject *GameObject) {
 	}
 
 	animation, ok := gameObject.Scene.animations[animator.currentAnimation]
-        if !ok {
+	if !ok {
 		return
 	}
 
