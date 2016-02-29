@@ -1,5 +1,14 @@
 package gozmo
 
+/*
+
+A Scene is a group of resources (textures, animations, sounds)
+and instantiated GameObjects
+
+When a scene is destroyed, all of the allocated resources and GameObjects are destroyed.
+
+*/
+
 import (
     "io/ioutil"
     "encoding/json"
@@ -11,6 +20,7 @@ type Scene struct {
     gameObjects []*GameObject
     textures map[string]*Texture
     animations map[string]*Animation
+    // this contains the last timestamp of the engine
     lastTime float64
 }
 

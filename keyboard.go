@@ -2,6 +2,13 @@
 
 package gozmo
 
+/*
+
+Keyboard mappins, by default we will use the glfw names
+but we need to duplicate them to support more platforms in the future
+
+*/
+
 import (
     "github.com/go-gl/glfw/v3.1/glfw"
 )
@@ -24,6 +31,12 @@ const (
     KeyEsc Key = Key(glfw.KeyEscape)
 )
 
+/*
+
+TODO decide if the input system can be managed
+as attributes or we need a specific layer
+
+*/
 var KeyboardAttr map[string]Key = map[string]Key {
                    "Right": KeyRight,
                }
