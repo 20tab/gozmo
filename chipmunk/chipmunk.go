@@ -46,23 +46,23 @@ func (rbody *RigidBody) GetType() string {
 }
 
 func (rbody *RigidBody) SetAttr(attr string, value interface{}) error {
-        switch attr {
-                case "velocityX":
-                        x, _ := goz.CastFloat32(value)
-			oldV := rbody.body.Velocity()
-                        rbody.body.SetVelocity(x, float32(oldV.Y))
-        }
-        return nil
+	switch attr {
+	case "velocityX":
+		x, _ := goz.CastFloat32(value)
+		oldV := rbody.body.Velocity()
+		rbody.body.SetVelocity(x, float32(oldV.Y))
+	}
+	return nil
 }
 
 func (rbody *RigidBody) GetAttr(attr string) (interface{}, error) {
-        switch attr {
-        case "velocityX":
-                return float32(rbody.body.Velocity().X), nil
-        case "velocityY":
-                return float32(rbody.body.Velocity().Y), nil
-        }
-        return nil, fmt.Errorf("%v attribute of %T not found", attr, rbody)
+	switch attr {
+	case "velocityX":
+		return float32(rbody.body.Velocity().X), nil
+	case "velocityY":
+		return float32(rbody.body.Velocity().Y), nil
+	}
+	return nil, fmt.Errorf("%v attribute of %T not found", attr, rbody)
 }
 
 func NewRigidBody(weight float32) goz.Component {
@@ -139,6 +139,8 @@ func (circle *ShapeCircle) Update(gameObject *goz.GameObject) {
 	component := gameObject.GetComponentByType("RigidBody")
 	if component != nil {
 		rbody := component.(*RigidBody)
+		moment := circle.shape.Moment(float32(rbody.body.Mass()))
+		rbody.body.SetMoment(moment)
 		rbody.body.AddShape(circle.shape.Shape)
 		space.AddShape(circle.shape.Shape)
 		return
@@ -155,20 +157,20 @@ func (circle *ShapeCircle) Update(gameObject *goz.GameObject) {
 
 func (circle *ShapeCircle) SetAttr(attr string, value interface{}) error {
 	switch attr {
-		case "radius":
-			radius, _ := goz.CastFloat32(value)
-			circle.shape.Radius = vect.Float(radius)
-			circle.shape.Shape.Update()
+	case "radius":
+		radius, _ := goz.CastFloat32(value)
+		circle.shape.Radius = vect.Float(radius)
+		circle.shape.Shape.Update()
 	}
 	return nil
 }
 
 func (circle *ShapeCircle) GetAttr(attr string) (interface{}, error) {
 	switch attr {
-        case "radius":
-                return float32(circle.shape.Radius), nil
-        }
-        return nil, fmt.Errorf("%v attribute of %T not found", attr, circle)
+	case "radius":
+		return float32(circle.shape.Radius), nil
+	}
+	return nil, fmt.Errorf("%v attribute of %T not found", attr, circle)
 }
 
 func NewShapeCircle() goz.Component {
@@ -212,6 +214,8 @@ func (box *ShapeBox) Update(gameObject *goz.GameObject) {
 	component := gameObject.GetComponentByType("RigidBody")
 	if component != nil {
 		rbody := component.(*RigidBody)
+		moment := box.shape.Moment(float32(rbody.body.Mass()))
+		rbody.body.SetMoment(moment)
 		rbody.body.AddShape(box.shape.Shape)
 		space.AddShape(box.shape.Shape)
 		return
@@ -227,27 +231,27 @@ func (box *ShapeBox) Update(gameObject *goz.GameObject) {
 }
 
 func (box *ShapeBox) SetAttr(attr string, value interface{}) error {
-        switch attr {
-                case "width":
-                        w, _ := goz.CastFloat32(value)
-                        box.shape.Width = vect.Float(w)
-			box.shape.UpdatePoly()
-                case "height":
-                        h, _ := goz.CastFloat32(value)
-                        box.shape.Height = vect.Float(h)
-			box.shape.UpdatePoly()
-        }
-        return nil
+	switch attr {
+	case "width":
+		w, _ := goz.CastFloat32(value)
+		box.shape.Width = vect.Float(w)
+		box.shape.UpdatePoly()
+	case "height":
+		h, _ := goz.CastFloat32(value)
+		box.shape.Height = vect.Float(h)
+		box.shape.UpdatePoly()
+	}
+	return nil
 }
 
 func (box *ShapeBox) GetAttr(attr string) (interface{}, error) {
-        switch attr {
-        case "width":
-                return float32(box.shape.Width), nil
-        case "height":
-                return float32(box.shape.Height), nil
-        }
-        return nil, fmt.Errorf("%v attribute of %T not found", attr, box)
+	switch attr {
+	case "width":
+		return float32(box.shape.Width), nil
+	case "height":
+		return float32(box.shape.Height), nil
+	}
+	return nil, fmt.Errorf("%v attribute of %T not found", attr, box)
 }
 
 func NewShapeBox() goz.Component {
