@@ -92,28 +92,21 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	switch attr {
 	case "positionX":
 		gameObject.Position[0], _ = CastFloat32(value)
-		return nil
 	case "positionY":
 		gameObject.Position[1], _ = CastFloat32(value)
-		return nil
 	case "positionAddX":
 		x, _ := CastFloat32(value)
 		gameObject.Position[0] += x
-		return nil
 	case "positionAddY":
 		y, _ := CastFloat32(value)
 		gameObject.Position[1] += y
-		return nil
 	case "scaleX":
 		gameObject.Scale[0], _ = CastFloat32(value)
-		return nil
 	case "scaleY":
 		gameObject.Scale[1], _ = CastFloat32(value)
-		return nil
 	case "euler":
 		r, _ := CastFloat32(value)
 		gameObject.SetEuler(r)
-		return nil
 	case "name":
 		name, ok := value.(string)
 		if ok {
@@ -122,7 +115,6 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 		}
 		return fmt.Errorf("%v attribute of %T expects a string", attr, gameObject)
 	}
-
 	return nil
 }
 

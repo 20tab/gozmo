@@ -10,6 +10,7 @@ of registered components
 
 type EngineSingleton struct {
 	registeredComponents map[string]*RegisteredComponent
+	registeredUpdaters []func(scene *Scene, deltaTime float32)
 }
 
 var Engine EngineSingleton
@@ -23,4 +24,8 @@ func RegisterComponent(name string, generator func([]interface{}) Component) {
 	rc := RegisteredComponent{Name: name, Init: generator}
 
 	Engine.registeredComponents[name] = &rc
+}
+
+func RegisterUpdater(updater func(scene *Scene, deltaTime float32)) {
+	Engine.registeredUpdaters = append(Engine.registeredUpdaters, updater)
 }

@@ -35,6 +35,10 @@ func (scene *Scene) Update(now float64) {
 			gameObject.components[key].Update(gameObject)
 		}
 	}
+
+	for _, updater := range Engine.registeredUpdaters {
+		updater(scene, deltaTime)
+	}
 }
 
 func (window *Window) NewScene() *Scene {
