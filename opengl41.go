@@ -48,7 +48,6 @@ func GLTexture(rgba *image.RGBA) uint32 {
     //gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
     //gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
 
-    fmt.Println(gl.GetError())
     return texture
 }
 
@@ -56,7 +55,6 @@ func GLNewBuffer() uint32 {
     var bid uint32
     gl.GenBuffers(1, &bid)
     gl.BindBuffer(gl.ARRAY_BUFFER, bid)
-    fmt.Println(bid)
     return bid
 }
 

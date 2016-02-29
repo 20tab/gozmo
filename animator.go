@@ -190,3 +190,11 @@ func (animator *Animator) SetAnimation(name string) {
 func (animator *Animator) GetAnimation() string {
     return animator.currentAnimation
 }
+
+func initAnimator(args []interface{}) Component {
+    return NewAnimator()
+}
+
+func init() {
+    RegisterComponent("Animator", initAnimator)
+}

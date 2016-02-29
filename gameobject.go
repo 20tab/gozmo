@@ -43,6 +43,11 @@ func (gameObject *GameObject) AddComponent(name string, component Component) Com
     return component
 }
 
+func (gameObject *GameObject) AddComponentName(name string, componentName string, args []interface{}) Component {
+    component := Engine.registeredComponents[componentName].Init(args)
+    return gameObject.AddComponent(name, component)
+}
+
 func (gameObject *GameObject) SetOrder(order int32) {
 }
 

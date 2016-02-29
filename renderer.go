@@ -229,3 +229,11 @@ func (renderer *Renderer) GetAttr(attr string) (interface{}, error) {
     }
     return nil, fmt.Errorf("%v attribute of %T not found", attr, renderer)
 }
+
+func initRenderer(args []interface{}) Component {
+    return NewRenderer(nil)
+}
+
+func init() {
+    RegisterComponent("Renderer", initRenderer)
+}
