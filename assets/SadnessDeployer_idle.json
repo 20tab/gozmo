@@ -1,0 +1,21 @@
+{
+	"fps": 4,
+	"frames": [
+		[
+			{ "component": "Renderer", "attr": "texture", "value": "sdIdle", "interpolate": false},
+			{ "component": "Renderer", "attr": "index", "value": 0, "interpolate": false}
+		],
+		[
+			null,
+			{ "component": "Renderer", "attr": "index", "value": 1, "interpolate": false}
+		],
+		[
+			null,
+			{ "component": "Renderer", "attr": "index", "value": 2, "interpolate": false}
+		],
+		[
+			null,
+			{ "component": "Renderer", "attr": "index", "value": 3, "interpolate": false}
+		]
+	]
+}

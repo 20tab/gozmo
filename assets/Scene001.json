@@ -1,0 +1,36 @@
+{
+    "name": "Level 1",
+    "textures": [
+        { "name": "sdIdle", "filename": "assets/sd_idle.png", "rows": 2, "cols": 2 }
+    ],
+    "animations": [
+        {
+            "name": "idle",
+            "fps": 4,
+            "frames": [
+                [
+                    { "component": "", "key": "positionX", "value": 7 },
+                    { "component": "", "key": "positionY", "value": 5 }
+                ],
+                [
+                    { "component": "", "key": "positionX", "value": 9 },
+                    { "component": "", "key": "positionY", "value": 8 }
+                ]
+            ] 
+        }
+    ],
+    "objects": [
+        {
+            "name": "Player001",
+            "components": [
+                { "name": "Renderer001", "type": "Renderer" },
+                { "name": "Animator001", "type": "Animator" }
+            ],
+            "attrs": [
+                { "component": "Renderer001", "key": "texture", "value": "sdIdle" },
+                { "component": "", "key": "positionX", "value": 5 },
+                { "component": "", "key": "positionY", "value": 3 }
+            ]
+        }
+    ]
+}
