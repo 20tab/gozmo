@@ -65,8 +65,6 @@ func (renderer *Renderer) createMesh() {
 
 	GLBufferData(1, mesh.uvbid, mesh.uvs)
 
-	fmt.Println("createMesh()")
-
 	renderer.projection = mgl32.Ortho2D(-20.0, 20.0, -15.0, 15.0)
 
 	renderer.mesh = &mesh
