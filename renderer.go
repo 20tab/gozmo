@@ -139,11 +139,11 @@ func (renderer *Renderer) SetAttr(attr string, value interface{}) error {
 	switch attr {
 	case "index":
 		index, err := CastUInt32(value)
-		if err == nil {
-			renderer.index = index
-			return nil
+		if err != nil {
+			return fmt.Errorf("%v attribute of %T", attr, renderer, err)
 		}
-		return fmt.Errorf("%v attribute of %T", attr, renderer, err)
+		renderer.index = index
+		return nil
 	case "texture":
 		textureName, ok := value.(string)
 		if ok {
