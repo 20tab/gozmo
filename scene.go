@@ -197,10 +197,13 @@ func loadAnimations(scene *Scene, animations []interface{}) {
 						panic("animation action requires a value")
 					}
 					actionsList = append(actionsList, &AnimationAction{ComponentName: component.(string), Attr: key.(string), Value: value})
+					fmt.Println(actionsList)
 				}
+				animation.AddFrame(actionsList)
 			}
-			animation.AddFrame(actionsList)
 		}
+
+		fmt.Println("frames:", len(animation.Frames))
 	}
 }
 

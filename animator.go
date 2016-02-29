@@ -78,6 +78,7 @@ func (animator *Animator) Update(gameObject *GameObject) {
 		}
 
 		animator.deltaT = float32(math.Abs(1.0 / float64(animation.Fps)))
+
 	}
 
 	if animator.frameApplied == false {

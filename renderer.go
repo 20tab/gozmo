@@ -143,6 +143,16 @@ func (renderer *Renderer) SetAttr(attr string, value interface{}) error {
 			renderer.index = index
 			return nil
 		}
+		index64, ok := value.(uint64)
+		if ok {
+			renderer.index = uint32(index64)
+			return nil
+		}
+		indexf64, ok := value.(float64)
+		if ok {
+			renderer.index = uint32(indexf64)
+			return nil
+		}
 		return fmt.Errorf("%v attribute of %T expects a uint32", attr, renderer)
 	case "texture":
 		textureName, ok := value.(string)
