@@ -48,7 +48,7 @@ func main() {
 
 	spyke := scene001.NewGameObject("Player001")
 	// add a component by name
-        spyke.AddComponentName("render", "Renderer", nil)
+	spyke.AddComponentName("render", "Renderer", nil)
 	// set component attribute with SetAttr
 	spyke.SetAttr("render", "texture", "spyke_red")
 

@@ -17,7 +17,7 @@ type Window struct {
 	currentScene *Scene
 }
 
-func OpenWindow(width int32, height int32, title string) *Window {
+func OpenWindowVersion(width int32, height int32, title string, major int, minor int) *Window {
 	runtime.LockOSThread()
 	window := Window{width: width, height: height, title: title}
 
@@ -26,9 +26,11 @@ func OpenWindow(width int32, height int32, title string) *Window {
 	}
 
 	glfw.WindowHint(glfw.Resizable, glfw.False)
-	glfw.WindowHint(glfw.ContextVersionMajor, 4)
-	glfw.WindowHint(glfw.ContextVersionMinor, 1)
-	glfw.WindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
+	glfw.WindowHint(glfw.ContextVersionMajor, major)
+	glfw.WindowHint(glfw.ContextVersionMinor, minor)
+	if major >= 4 || (major >= 3 && minor >= 2) {
+		glfw.WindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
+	}
 	glfw.WindowHint(glfw.OpenGLForwardCompatible, glfw.True)
 	glfw.WindowHint(glfw.DoubleBuffer, 1)
 
@@ -52,6 +54,10 @@ func OpenWindow(width int32, height int32, title string) *Window {
 	GLInit(int32(fbWidth), int32(fbHeight))
 
 	return &window
+}
+
+func OpenWindow(width int32, height int32, title string) *Window {
+	return OpenWindowVersion(width, height, title, 3, 3)
 }
 
 func (window *Window) Run() {
