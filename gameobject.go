@@ -92,7 +92,6 @@ func (gameObject *GameObject) GetComponentByType(name string) interface{} {
 		componentType, ok := component.(ComponentType)
 		if ok {
 			if componentType.GetType() == name {
-				fmt.Println(name)
 				return component
 			}
 		}

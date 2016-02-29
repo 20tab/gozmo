@@ -45,6 +45,26 @@ func (rbody *RigidBody) GetType() string {
 	return "RigidBody"
 }
 
+func (rbody *RigidBody) SetAttr(attr string, value interface{}) error {
+        switch attr {
+                case "velocityX":
+                        x, _ := goz.CastFloat32(value)
+			oldV := rbody.body.Velocity()
+                        rbody.body.SetVelocity(x, float32(oldV.Y))
+        }
+        return nil
+}
+
+func (rbody *RigidBody) GetAttr(attr string) (interface{}, error) {
+        switch attr {
+        case "velocityX":
+                return float32(rbody.body.Velocity().X), nil
+        case "velocityY":
+                return float32(rbody.body.Velocity().Y), nil
+        }
+        return nil, fmt.Errorf("%v attribute of %T not found", attr, rbody)
+}
+
 func NewRigidBody(weight float32) goz.Component {
 	body := RigidBody{weight: weight}
 	return &body
@@ -91,23 +111,18 @@ func initStaticBody(args []interface{}) goz.Component {
 
 // Shape Circle
 type ShapeCircle struct {
-	shape *chipmunk.Shape
+	shape       *chipmunk.CircleShape
+	initialized bool
 }
 
 func (circle *ShapeCircle) Start(gameObject *goz.GameObject) {
 	component := gameObject.GetComponentByType("RigidBody")
 	if component != nil {
-		rbody := component.(*RigidBody)
-		rbody.body.AddShape(circle.shape)
-		space.AddShape(circle.shape)
 		return
 	}
 
 	component = gameObject.GetComponentByType("StaticBody")
 	if component != nil {
-		sbody := component.(*StaticBody)
-		sbody.body.AddShape(circle.shape)
-		space.AddShape(circle.shape)
 		return
 	}
 
@@ -115,16 +130,135 @@ func (circle *ShapeCircle) Start(gameObject *goz.GameObject) {
 }
 
 func (circle *ShapeCircle) Update(gameObject *goz.GameObject) {
+	if circle.initialized {
+		return
+	}
+
+	circle.initialized = true
+
+	component := gameObject.GetComponentByType("RigidBody")
+	if component != nil {
+		rbody := component.(*RigidBody)
+		rbody.body.AddShape(circle.shape.Shape)
+		space.AddShape(circle.shape.Shape)
+		return
+	}
+
+	component = gameObject.GetComponentByType("StaticBody")
+	if component != nil {
+		sbody := component.(*StaticBody)
+		sbody.body.AddShape(circle.shape.Shape)
+		space.AddShape(circle.shape.Shape)
+		return
+	}
+}
+
+func (circle *ShapeCircle) SetAttr(attr string, value interface{}) error {
+	switch attr {
+		case "radius":
+			radius, _ := goz.CastFloat32(value)
+			circle.shape.Radius = vect.Float(radius)
+			circle.shape.Shape.Update()
+	}
+	return nil
+}
+
+func (circle *ShapeCircle) GetAttr(attr string) (interface{}, error) {
+	switch attr {
+        case "radius":
+                return float32(circle.shape.Radius), nil
+        }
+        return nil, fmt.Errorf("%v attribute of %T not found", attr, circle)
 }
 
 func NewShapeCircle() goz.Component {
 	circle := ShapeCircle{}
-	circle.shape = chipmunk.NewCircle(vect.Vector_Zero, 3)
+	circle.shape = chipmunk.NewCircle(vect.Vector_Zero, 0).ShapeClass.(*chipmunk.CircleShape)
 	return &circle
 }
 
+// TODO pass the radius as argument
 func initShapeCircle(args []interface{}) goz.Component {
 	return NewShapeCircle()
+}
+
+// Shape Box
+type ShapeBox struct {
+	shape       *chipmunk.BoxShape
+	initialized bool
+}
+
+func (box *ShapeBox) Start(gameObject *goz.GameObject) {
+	component := gameObject.GetComponentByType("RigidBody")
+	if component != nil {
+		return
+	}
+
+	component = gameObject.GetComponentByType("StaticBody")
+	if component != nil {
+		return
+	}
+
+	fmt.Println("ShapeBox requires a physic body")
+}
+
+func (box *ShapeBox) Update(gameObject *goz.GameObject) {
+	if box.initialized {
+		return
+	}
+
+	box.initialized = true
+
+	component := gameObject.GetComponentByType("RigidBody")
+	if component != nil {
+		rbody := component.(*RigidBody)
+		rbody.body.AddShape(box.shape.Shape)
+		space.AddShape(box.shape.Shape)
+		return
+	}
+
+	component = gameObject.GetComponentByType("StaticBody")
+	if component != nil {
+		sbody := component.(*StaticBody)
+		sbody.body.AddShape(box.shape.Shape)
+		space.AddShape(box.shape.Shape)
+		return
+	}
+}
+
+func (box *ShapeBox) SetAttr(attr string, value interface{}) error {
+        switch attr {
+                case "width":
+                        w, _ := goz.CastFloat32(value)
+                        box.shape.Width = vect.Float(w)
+			box.shape.UpdatePoly()
+                case "height":
+                        h, _ := goz.CastFloat32(value)
+                        box.shape.Height = vect.Float(h)
+			box.shape.UpdatePoly()
+        }
+        return nil
+}
+
+func (box *ShapeBox) GetAttr(attr string) (interface{}, error) {
+        switch attr {
+        case "width":
+                return float32(box.shape.Width), nil
+        case "height":
+                return float32(box.shape.Height), nil
+        }
+        return nil, fmt.Errorf("%v attribute of %T not found", attr, box)
+}
+
+func NewShapeBox() goz.Component {
+	box := ShapeBox{}
+	box.shape = chipmunk.NewBox(vect.Vector_Zero, 0, 0).ShapeClass.(*chipmunk.BoxShape)
+	return &box
+}
+
+// TODO pass width and height
+func initShapeBox(args []interface{}) goz.Component {
+	return NewShapeBox()
 }
 
 // this will be called at every world update
@@ -139,5 +273,6 @@ func init() {
 	goz.RegisterComponent("RigidBody", initRigidBody)
 	goz.RegisterComponent("StaticBody", initStaticBody)
 	goz.RegisterComponent("ShapeCircle", initShapeCircle)
+	goz.RegisterComponent("ShapeBox", initShapeBox)
 	goz.RegisterUpdater(updateWorld)
 }
