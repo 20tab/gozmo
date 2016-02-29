@@ -138,7 +138,7 @@ func (renderer *Renderer) SetPixelsPerUnit(pixels uint32) {
 func (renderer *Renderer) SetAttr(attr string, value interface{}) error {
 	switch attr {
 	case "index":
-		index, err := CastUInt32(value) 
+		index, err := CastUInt32(value)
 		if err == nil {
 			renderer.index = index
 			return nil

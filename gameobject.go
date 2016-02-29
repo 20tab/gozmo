@@ -106,10 +106,10 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 		return nil
 	case "scaleX":
 		gameObject.Scale[0], _ = CastFloat32(value)
-                return nil
+		return nil
 	case "scaleY":
 		gameObject.Scale[1], _ = CastFloat32(value)
-                return nil
+		return nil
 	case "euler":
 		r, _ := CastFloat32(value)
 		gameObject.SetEuler(r)
