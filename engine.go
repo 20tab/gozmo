@@ -10,7 +10,7 @@ of registered components
 
 type EngineSingleton struct {
 	registeredComponents map[string]*RegisteredComponent
-	registeredUpdaters []func(scene *Scene, deltaTime float32)
+	registeredUpdaters   []func(scene *Scene, deltaTime float32)
 }
 
 var Engine EngineSingleton

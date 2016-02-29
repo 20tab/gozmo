@@ -229,6 +229,10 @@ func (animator *Animator) GetAttr(attr string) (interface{}, error) {
 
 }
 
+func (animator *Animator) GetType() string {
+	return "Animator"
+}
+
 func initAnimator(args []interface{}) Component {
 	return NewAnimator()
 }

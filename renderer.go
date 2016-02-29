@@ -237,6 +237,10 @@ func (renderer *Renderer) GetAttr(attr string) (interface{}, error) {
 	return nil, fmt.Errorf("%v attribute of %T not found", attr, renderer)
 }
 
+func (renderer *Renderer) GetType() string {
+	return "Renderer"
+}
+
 func initRenderer(args []interface{}) Component {
 	return NewRenderer(nil)
 }

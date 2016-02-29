@@ -87,6 +87,19 @@ func (gameObject *GameObject) GetComponent(name string) interface{} {
 	return gameObject.components[name]
 }
 
+func (gameObject *GameObject) GetComponentByType(name string) interface{} {
+	for _, component := range gameObject.components {
+		componentType, ok := component.(ComponentType)
+		if ok {
+			if componentType.GetType() == name {
+				fmt.Println(name)
+				return component
+			}
+		}
+	}
+	return nil
+}
+
 // support both 32 and 64bit values
 func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	switch attr {

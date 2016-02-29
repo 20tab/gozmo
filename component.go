@@ -23,3 +23,7 @@ type ComponentAttr interface {
 	SetAttr(attr string, value interface{}) error
 	GetAttr(attr string) (interface{}, error)
 }
+
+type ComponentType interface {
+	GetType() string
+}
