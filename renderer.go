@@ -1,5 +1,13 @@
 package gozmo
 
+/*
+
+this is an accelerated sprite drawer component
+
+It supports color addition and multiplication
+
+*/
+
 import (
 	"fmt"
 	"github.com/go-gl/mathgl/mgl32"
@@ -28,6 +36,7 @@ type Renderer struct {
 
 var shader int32 = -1
 
+// the mesh is created and uploaded into the GPU only when needed
 func (renderer *Renderer) createMesh() {
 	if shader == -1 {
 		shader = int32(GLShader())
