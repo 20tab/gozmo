@@ -30,7 +30,10 @@ func (animator *Animator) Update(gameObject *GameObject) {
 		return
 	}
 
-	animation := gameObject.Scene.animations[animator.currentAnimation]
+	animation, ok := gameObject.Scene.animations[animator.currentAnimation]
+        if !ok {
+		return
+	}
 
 	if animator.deltaT > 0 {
 		animator.deltaT -= gameObject.DeltaTime
@@ -206,7 +209,7 @@ func (animator *Animator) SetAttr(attr string, value interface{}) error {
 	case "animation":
 		animation, ok := value.(string)
 		if ok {
-			animator.SetAnimation(value.(string))
+			animator.SetAnimation(animation)
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a string", attr, animator)
@@ -219,7 +222,7 @@ func (animator *Animator) GetAttr(attr string) (interface{}, error) {
 	case "animation":
 		return animator.GetAnimation(), nil
 	case "play":
-		return animator.IsPlaying, nil
+		return animator.isPlaying, nil
 	}
 	return nil, fmt.Errorf("%v attribute of %T not found", attr, animator)
 
