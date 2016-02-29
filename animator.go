@@ -216,12 +216,12 @@ func (animator *Animator) SetAttr(attr string, value interface{}) error {
 
 func (animator *Animator) GetAttr(attr string) (interface{}, error) {
 	switch attr {
-        case "animation":
-                return animator.GetAnimation(), nil
-        case "play":
-                return animator.IsPlaying, nil
-        }
-        return nil, fmt.Errorf("%v attribute of %T not found", attr, animator)
+	case "animation":
+		return animator.GetAnimation(), nil
+	case "play":
+		return animator.IsPlaying, nil
+	}
+	return nil, fmt.Errorf("%v attribute of %T not found", attr, animator)
 
 }
 

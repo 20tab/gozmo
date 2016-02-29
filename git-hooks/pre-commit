@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "[go] formatting checks..."
+go fmt ./...
