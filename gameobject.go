@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/go-gl/mathgl/mgl32"
 	"math"
-	"strings"
 )
 
 type GameObject struct {
@@ -49,10 +48,6 @@ func (gameObject *GameObject) AddComponentName(name string, componentName string
 }
 
 func (gameObject *GameObject) SetOrder(order int32) {
-}
-
-func (gameObject *GameObject) GetKey(kc Key) bool {
-	return gameObject.Scene.Window.getKey(kc)
 }
 
 func (gameObject *GameObject) SetScale(x, y float32) {
@@ -130,10 +125,6 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	return nil
 }
 
-func (gameObject *GameObject) keyboardAttr(key string) bool {
-	return gameObject.GetKey(KeyboardAttr[key])
-}
-
 func (gameObject *GameObject) getAttr(attr string) (interface{}, error) {
 	switch attr {
 	case "positionX":
@@ -150,10 +141,6 @@ func (gameObject *GameObject) getAttr(attr string) (interface{}, error) {
 		return gameObject.DeltaTime, nil
 	case "name":
 		return gameObject.Name, nil
-	}
-
-	if strings.HasPrefix(attr, "getKey") {
-		return gameObject.keyboardAttr(attr[6:]), nil
 	}
 
 	return nil, fmt.Errorf("attribute %v not found in %T", attr, gameObject)

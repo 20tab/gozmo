@@ -53,6 +53,8 @@ func OpenWindowVersion(width int32, height int32, title string, major int, minor
 	fbWidth, fbHeight := glfwin.GetFramebufferSize()
 	GLInit(int32(fbWidth), int32(fbHeight))
 
+	Engine.Window = &window
+
 	return &window
 }
 

@@ -33,10 +33,48 @@ const (
 
 /*
 
-TODO decide if the input system can be managed
-as attributes or we need a specific layer
+yeah, this mapping is pretty ugly, but will simplify
+the "compositors" life
 
 */
 var KeyboardAttr map[string]Key = map[string]Key{
 	"Right": KeyRight,
+	"Left": KeyLeft,
+	"Up": KeyUp,
+	"Down": KeyDown,
+}
+
+type Keyboard struct {}
+
+func (keyboard *Keyboard) Start(gameObject *GameObject) {}
+func (keyboard *Keyboard) Update(gameObject *GameObject) {}
+
+func (keyboard *Keyboard) SetAttr(attr string, value interface{}) error {
+	return nil
+}
+
+func (keyboard *Keyboard) GetName() string {
+	return "Keyboard"
+}
+
+// what to do if the user specifies an unknown key ?
+func (keyboard *Keyboard) GetAttr(attr string) (interface{}, error) {
+	key, ok := KeyboardAttr[attr]
+	if !ok {
+		return false, nil
+	}
+	return Engine.Window.getKey( key ), nil
+}
+
+func NewKeyboard() *Keyboard {
+	keyboard := Keyboard{}
+	return &keyboard
+}
+
+func initKeyboard(args []interface{}) Component {
+        return NewKeyboard()
+}
+
+func init() {
+        RegisterComponent("Keyboard", initKeyboard)
 }
