@@ -13,5 +13,5 @@ func IsTrue(value interface{}, err error) bool {
 	if !ok {
 		return false
 	}
-	return isTrue;
+	return isTrue
 }

@@ -7,6 +7,7 @@ import (
 
 // A behaviour allowing movements with arrow keys
 type CrossMove struct {
+	kbd *goz.Keyboard
 	speed float32
 }
 
@@ -17,19 +18,19 @@ func (cross *CrossMove) Start(gameObject *goz.GameObject) {
 
 // gameObject.Position is a Vector2 struct, 0 is x, 1 is y
 func (cross *CrossMove) Update(gameObject *goz.GameObject) {
-	if gameObject.GetKey(goz.KeyRight) {
+	if cross.kbd.GetKey(goz.KeyRight) {
 		gameObject.Position[0] += cross.speed * gameObject.DeltaTime
 	}
 
-	if gameObject.GetKey(goz.KeyLeft) {
+	if cross.kbd.GetKey(goz.KeyLeft) {
 		gameObject.Position[0] -= cross.speed * gameObject.DeltaTime
 	}
 
-	if gameObject.GetKey(goz.KeyUp) {
+	if cross.kbd.GetKey(goz.KeyUp) {
 		gameObject.Position[1] += cross.speed * gameObject.DeltaTime
 	}
 
-	if gameObject.GetKey(goz.KeyDown) {
+	if cross.kbd.GetKey(goz.KeyDown) {
 		gameObject.Position[1] -= cross.speed * gameObject.DeltaTime
 	}
 }
@@ -52,8 +53,11 @@ func main() {
 	// set component attribute with SetAttr
 	spyke.SetAttr("render", "texture", "spyke_red")
 
+	keyboard := goz.NewKeyboard()
+	spyke.AddComponent("kbd", keyboard)
+
 	// and add another one by reference
-	spyke.AddComponent("move_with_arrows", &CrossMove{})
+	spyke.AddComponent("move_with_arrows", &CrossMove{kbd: keyboard})
 
 	window.SetScene(scene001)
 	window.Run()

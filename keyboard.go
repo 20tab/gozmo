@@ -39,14 +39,14 @@ the "compositors" life
 */
 var KeyboardAttr map[string]Key = map[string]Key{
 	"Right": KeyRight,
-	"Left": KeyLeft,
-	"Up": KeyUp,
-	"Down": KeyDown,
+	"Left":  KeyLeft,
+	"Up":    KeyUp,
+	"Down":  KeyDown,
 }
 
-type Keyboard struct {}
+type Keyboard struct{}
 
-func (keyboard *Keyboard) Start(gameObject *GameObject) {}
+func (keyboard *Keyboard) Start(gameObject *GameObject)  {}
 func (keyboard *Keyboard) Update(gameObject *GameObject) {}
 
 func (keyboard *Keyboard) SetAttr(attr string, value interface{}) error {
@@ -57,13 +57,17 @@ func (keyboard *Keyboard) GetName() string {
 	return "Keyboard"
 }
 
+func (keyboard *Keyboard) GetKey(key Key) bool {
+	return Engine.Window.getKey(key)
+}
+
 // what to do if the user specifies an unknown key ?
 func (keyboard *Keyboard) GetAttr(attr string) (interface{}, error) {
 	key, ok := KeyboardAttr[attr]
 	if !ok {
 		return false, nil
 	}
-	return Engine.Window.getKey( key ), nil
+	return Engine.Window.getKey(key), nil
 }
 
 func NewKeyboard() *Keyboard {
@@ -72,9 +76,9 @@ func NewKeyboard() *Keyboard {
 }
 
 func initKeyboard(args []interface{}) Component {
-        return NewKeyboard()
+	return NewKeyboard()
 }
 
 func init() {
-        RegisterComponent("Keyboard", initKeyboard)
+	RegisterComponent("Keyboard", initKeyboard)
 }

@@ -9,7 +9,7 @@ of registered components
 */
 
 type EngineSingleton struct {
-	Window *Window
+	Window               *Window
 	registeredComponents map[string]*RegisteredComponent
 	registeredUpdaters   []func(scene *Scene, deltaTime float32)
 }
