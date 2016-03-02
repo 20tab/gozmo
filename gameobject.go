@@ -7,10 +7,10 @@ import (
 )
 
 type GameObject struct {
-	Name    string
-	enabled bool
+	Name       string
+	enabled    bool
 	persistent bool
-	order   int32
+	order      int32
 
 	Scene *Scene
 

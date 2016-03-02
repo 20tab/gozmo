@@ -26,5 +26,5 @@ func CastBool(value interface{}) (bool, error) {
 	if err == nil {
 		return num != 0, nil
 	}
-        return false, fmt.Errorf("expects a bool")
+	return false, fmt.Errorf("expects a bool")
 }

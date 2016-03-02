@@ -44,16 +44,20 @@ func (scene *Scene) Update(now float64) {
 	}
 }
 
-func (window *Window) NewScene() *Scene {
-	scene := Scene{Window: window}
+func (window *Window) NewScene(name string) *Scene {
+	scene := Scene{Window: window, Name: name}
 	scene.textures = make(map[string]*Texture)
 	scene.animations = make(map[string]*Animation)
-	window.scenes = append(window.scenes, &scene)
+	window.scenes[name] = &scene
 	return &scene
 }
 
 func (window *Window) SetScene(scene *Scene) {
 	window.currentScene = scene
+}
+
+func (window *Window) SetSceneByName(sceneName string) {
+	window.currentScene = window.scenes[sceneName]
 }
 
 func loadTextures(scene *Scene, textures []interface{}) {
@@ -213,7 +217,6 @@ func loadAnimations(scene *Scene, animations []interface{}) {
 }
 
 func (window *Window) NewSceneFilename(fileName string) *Scene {
-	scene := window.NewScene()
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		panic(err)
@@ -225,6 +228,14 @@ func (window *Window) NewSceneFilename(fileName string) *Scene {
 	if err != nil {
 		panic(err)
 	}
+
+
+	name, ok := parsed["name"]
+	if !ok {
+		panic("a scene requires a name")
+	}
+
+	scene := window.NewScene(name.(string))
 
 	for key, value := range parsed {
 		switch key {

@@ -13,13 +13,15 @@ type Window struct {
 	height       int32
 	title        string
 	glfwWindow   *glfw.Window
-	scenes       []*Scene
+	scenes       map[string]*Scene
 	currentScene *Scene
 }
 
 func OpenWindowVersion(width int32, height int32, title string, major int, minor int) *Window {
 	runtime.LockOSThread()
 	window := Window{width: width, height: height, title: title}
+
+	window.scenes = make(map[string]*Scene)
 
 	if err := glfw.Init(); err != nil {
 		log.Fatalln("failed to initialize glfw:", err)
@@ -72,12 +74,6 @@ func (window *Window) Run() {
 		GLClear()
 
 		scene := window.currentScene
-		if scene == nil {
-			if len(window.scenes) > 0 {
-				scene = window.scenes[0]
-			}
-		}
-
 		if scene != nil {
 			scene.Update(glfw.GetTime())
 		}

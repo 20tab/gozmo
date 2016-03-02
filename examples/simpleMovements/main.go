@@ -39,8 +39,7 @@ func main() {
 
 	window := goz.OpenWindow(1024, 768, "Gozmo")
 
-	scene001 := window.NewScene()
-	scene001.Name = "Scene 1"
+	scene001 := window.NewScene("Scene 1")
 
 	// load a texture into the scene
 	scene001.NewTextureFilename("spyke_red", "assets/spyke_red.png")
