@@ -7,9 +7,11 @@ import (
 )
 
 type GameObject struct {
-	Name       string
-	enabled    bool
-	order      int32
+	// TODO is it a good idea to allow the developer to change the game object name
+	// and messing with internal data ?
+	Name    string
+	enabled bool
+	order   int32
 
 	Scene *Scene
 

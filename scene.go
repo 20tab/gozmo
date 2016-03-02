@@ -16,8 +16,8 @@ import (
 )
 
 type Scene struct {
+	// TODO is it a good idea to expose Name ?
 	Name        string
-	Window      *Window
 	gameObjects map[string]*GameObject
 	textures    map[string]*Texture
 	animations  map[string]*Animation
@@ -45,7 +45,7 @@ func (scene *Scene) Update(now float64) {
 }
 
 func (window *Window) NewScene(name string) *Scene {
-	scene := Scene{Window: window, Name: name}
+	scene := Scene{Name: name}
 	scene.gameObjects = make(map[string]*GameObject)
 	scene.textures = make(map[string]*Texture)
 	scene.animations = make(map[string]*Animation)
@@ -266,4 +266,7 @@ func (scene *Scene) Destroy() {
 	for _, texture := range scene.textures {
 		texture.Destroy()
 	}
+
+	// remove the scene from the map, so the GC can make its job
+	delete(Engine.Window.scenes, scene.Name)
 }
