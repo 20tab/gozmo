@@ -24,6 +24,10 @@ type ComponentAttr interface {
 	GetAttr(attr string) (interface{}, error)
 }
 
+type ComponentDestroy interface {
+	Destroy(gameObject *GameObject)
+}
+
 type ComponentType interface {
 	GetType() string
 }

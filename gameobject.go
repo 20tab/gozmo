@@ -9,6 +9,7 @@ import (
 type GameObject struct {
 	Name    string
 	enabled bool
+	persistent bool
 	order   int32
 
 	Scene *Scene
@@ -29,6 +30,8 @@ func (scene *Scene) NewGameObject(name string) *GameObject {
 	gameObject := GameObject{Name: name, order: 0}
 	gameObject.components = make(map[string]Component)
 	gameObject.customAttrs = make(map[string]interface{})
+	// a game object always starts as enabled
+	gameObject.enabled = true
 	gameObject.Scene = scene
 	gameObject.Scale = mgl32.Vec2{1, 1}
 	scene.gameObjects = append(scene.gameObjects, &gameObject)
@@ -78,6 +81,14 @@ func (gameObject *GameObject) AddPosition(x float32, y float32) {
 	gameObject.Position = gameObject.Position.Add(mgl32.Vec2{x, y})
 }
 
+func (gameObject *GameObject) SetPersistent(flag bool) {
+	gameObject.persistent = flag
+}
+
+func (gameObject *GameObject) SetEnabled(flag bool) {
+	gameObject.enabled = flag
+}
+
 func (gameObject *GameObject) GetComponent(name string) interface{} {
 	return gameObject.components[name]
 }
@@ -97,6 +108,12 @@ func (gameObject *GameObject) GetComponentByType(name string) interface{} {
 // support both 32 and 64bit values
 func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	switch attr {
+	case "enabled":
+		flag, _ := CastBool(value)
+		gameObject.SetEnabled(flag)
+	case "persistent":
+		flag, _ := CastBool(value)
+		gameObject.SetPersistent(flag)
 	case "positionX":
 		gameObject.Position[0], _ = CastFloat32(value)
 	case "positionY":
@@ -127,6 +144,10 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 
 func (gameObject *GameObject) getAttr(attr string) (interface{}, error) {
 	switch attr {
+	case "enabled":
+		return gameObject.enabled, nil
+	case "persistent":
+		return gameObject.persistent, nil
 	case "positionX":
 		return gameObject.Position[0], nil
 	case "positionY":

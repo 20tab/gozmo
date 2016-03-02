@@ -1,5 +1,13 @@
 package chipmunk
 
+/*
+
+	Physic engine
+
+	TODO manage disabled objects
+
+*/
+
 import (
 	"fmt"
 	goz "github.com/20tab/gozmo"

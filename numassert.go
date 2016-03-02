@@ -21,6 +21,14 @@ func CastFloat32(number interface{}) (float32, error) {
 	if ok {
 		return float32(valueU64), nil
 	}
+	valueI32, ok := number.(int32)
+	if ok {
+		return float32(valueI32), nil
+	}
+	valueI64, ok := number.(int64)
+	if ok {
+		return float32(valueI64), nil
+	}
 	return 0, fmt.Errorf("expects a float32")
 }
 

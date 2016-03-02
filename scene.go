@@ -30,6 +30,9 @@ func (scene *Scene) Update(now float64) {
 	scene.lastTime = now
 
 	for _, gameObject := range scene.gameObjects {
+		if !gameObject.enabled {
+			continue
+		}
 		gameObject.DeltaTime = deltaTime
 		for _, key := range gameObject.componentsKeys {
 			gameObject.components[key].Update(gameObject)

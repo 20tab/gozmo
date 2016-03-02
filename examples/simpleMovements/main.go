@@ -7,7 +7,7 @@ import (
 
 // A behaviour allowing movements with arrow keys
 type CrossMove struct {
-	kbd *goz.Keyboard
+	kbd   *goz.Keyboard
 	speed float32
 }
 
