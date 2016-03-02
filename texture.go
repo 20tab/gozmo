@@ -62,3 +62,7 @@ func (texture *Texture) SetRowsCols(rows, cols uint32) {
 	texture.Rows = rows
 	texture.Cols = cols
 }
+
+func (texture *Texture) Destroy() {
+	// TODO delete texture from the GPU
+}

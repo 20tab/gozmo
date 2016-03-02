@@ -18,7 +18,7 @@ import (
 type Scene struct {
 	Name        string
 	Window      *Window
-	gameObjects []*GameObject
+	gameObjects map[string]*GameObject
 	textures    map[string]*Texture
 	animations  map[string]*Animation
 	// this contains the last timestamp of the engine
@@ -46,6 +46,7 @@ func (scene *Scene) Update(now float64) {
 
 func (window *Window) NewScene(name string) *Scene {
 	scene := Scene{Window: window, Name: name}
+	scene.gameObjects = make(map[string]*GameObject)
 	scene.textures = make(map[string]*Texture)
 	scene.animations = make(map[string]*Animation)
 	window.scenes[name] = &scene
@@ -229,7 +230,6 @@ func (window *Window) NewSceneFilename(fileName string) *Scene {
 		panic(err)
 	}
 
-
 	name, ok := parsed["name"]
 	if !ok {
 		panic("a scene requires a name")
@@ -254,4 +254,16 @@ func (window *Window) NewSceneFilename(fileName string) *Scene {
 	}
 
 	return scene
+}
+
+func (scene *Scene) Destroy() {
+	// first of all destroy objects
+	for _, gameObject := range scene.gameObjects {
+		gameObject.Destroy()
+	}
+
+	// the destroy textures
+	for _, texture := range scene.textures {
+		texture.Destroy()
+	}
 }

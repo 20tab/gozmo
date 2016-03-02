@@ -9,7 +9,6 @@ import (
 type GameObject struct {
 	Name       string
 	enabled    bool
-	persistent bool
 	order      int32
 
 	Scene *Scene
@@ -34,7 +33,7 @@ func (scene *Scene) NewGameObject(name string) *GameObject {
 	gameObject.enabled = true
 	gameObject.Scene = scene
 	gameObject.Scale = mgl32.Vec2{1, 1}
-	scene.gameObjects = append(scene.gameObjects, &gameObject)
+	scene.gameObjects[name] = &gameObject
 	return &gameObject
 }
 
@@ -81,10 +80,6 @@ func (gameObject *GameObject) AddPosition(x float32, y float32) {
 	gameObject.Position = gameObject.Position.Add(mgl32.Vec2{x, y})
 }
 
-func (gameObject *GameObject) SetPersistent(flag bool) {
-	gameObject.persistent = flag
-}
-
 func (gameObject *GameObject) SetEnabled(flag bool) {
 	gameObject.enabled = flag
 }
@@ -111,9 +106,6 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	case "enabled":
 		flag, _ := CastBool(value)
 		gameObject.SetEnabled(flag)
-	case "persistent":
-		flag, _ := CastBool(value)
-		gameObject.SetPersistent(flag)
 	case "positionX":
 		gameObject.Position[0], _ = CastFloat32(value)
 	case "positionY":
@@ -146,8 +138,6 @@ func (gameObject *GameObject) getAttr(attr string) (interface{}, error) {
 	switch attr {
 	case "enabled":
 		return gameObject.enabled, nil
-	case "persistent":
-		return gameObject.persistent, nil
 	case "positionX":
 		return gameObject.Position[0], nil
 	case "positionY":
@@ -206,4 +196,8 @@ func (gameObject *GameObject) GetAttr(componentName string, attr string) (interf
 		return nil, fmt.Errorf("component %v not found", componentName)
 	}
 	return component.GetAttr(attr)
+}
+
+func (gameObject *GameObject) Destroy() {
+	// call Destroy() on all associated components
 }
