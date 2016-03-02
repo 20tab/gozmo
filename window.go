@@ -18,6 +18,9 @@ type Window struct {
 }
 
 func OpenWindowVersion(width int32, height int32, title string, major int, minor int) *Window {
+	if Engine.Window != nil {
+		panic("a window is already active")
+	}
 	runtime.LockOSThread()
 	window := Window{width: width, height: height, title: title}
 
