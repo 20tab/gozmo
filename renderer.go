@@ -28,7 +28,6 @@ type Renderer struct {
 	texture       *Texture
 	textureName   string
 	pixelsPerUnit uint32
-	projection    mgl32.Mat4
 	index         uint32
 	addColor      mgl32.Vec4
 	mulColor      mgl32.Vec4
@@ -64,8 +63,6 @@ func (renderer *Renderer) createMesh() {
 	GLBufferData(0, mesh.vbid, mesh.vertices)
 
 	GLBufferData(1, mesh.uvbid, mesh.uvs)
-
-	renderer.projection = mgl32.Ortho2D(-20.0, 20.0, -15.0, 15.0)
 
 	renderer.mesh = &mesh
 }
@@ -124,7 +121,7 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 
 	model = model.Mul4(mgl32.HomogRotate3DZ(gameObject.Rotation))
 
-	ortho := renderer.projection.Mul4(model)
+	ortho := Engine.Window.Projection.Mul4(model)
 
 	GLDraw(renderer, uint32(shader), width, height, uvx, uvy, uvw, uvh, ortho)
 }

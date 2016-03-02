@@ -4,6 +4,7 @@ package gozmo
 
 import (
 	"github.com/go-gl/glfw/v3.1/glfw"
+	"github.com/go-gl/mathgl/mgl32"
 	"log"
 	"runtime"
 )
@@ -15,6 +16,7 @@ type Window struct {
 	glfwWindow   *glfw.Window
 	scenes       map[string]*Scene
 	currentScene *Scene
+	Projection    mgl32.Mat4
 }
 
 func OpenWindowVersion(width int32, height int32, title string, major int, minor int) *Window {
@@ -50,6 +52,7 @@ func OpenWindowVersion(width int32, height int32, title string, major int, minor
 
 	glfwin.MakeContextCurrent()
 
+	window.Projection = mgl32.Ortho2D(-20.0, 20.0, -15.0, 15.0)
 	window.glfwWindow = glfwin
 
 	glfw.SwapInterval(1)
