@@ -51,3 +51,31 @@ func CastUInt32(number interface{}) (uint32, error) {
 	}
 	return 0, fmt.Errorf("expects a uint32")
 }
+
+func CastInt(number interface{}) (int, error) {
+	valueI, ok := number.(int)
+	if ok {
+		return valueI, nil
+	}
+	valueUI, ok := number.(uint)
+	if ok {
+		return int(valueUI), nil
+	}
+	valueUI32, ok := number.(uint32)
+	if ok {
+		return int(valueUI32), nil
+	}
+	valueUI64, ok := number.(uint64)
+	if ok {
+		return int(valueUI64), nil
+	}
+	valueF32, ok := number.(float32)
+	if ok {
+		return int(valueF32), nil
+	}
+	valueF64, ok := number.(float64)
+	if ok {
+		return int(valueF64), nil
+	}
+	return 0, fmt.Errorf("expects a int")
+}

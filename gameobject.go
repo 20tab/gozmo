@@ -152,6 +152,10 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	case "euler":
 		r, _ := CastFloat32(value)
 		gameObject.SetEuler(r)
+	case "order":
+		o, _ := CastInt(value)
+		gameObject.SetOrder(o)
+	// TODO implement SetName() to maintain mappings and checking for duplicates
 	case "name":
 		name, ok := value.(string)
 		if ok {
@@ -179,6 +183,8 @@ func (gameObject *GameObject) getAttr(attr string) (interface{}, error) {
 		return gameObject.Rotation * 180 / math.Pi, nil
 	case "deltaTime":
 		return gameObject.DeltaTime, nil
+	case "order":
+		return gameObject.order, nil
 	case "name":
 		return gameObject.Name, nil
 	}
