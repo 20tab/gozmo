@@ -52,7 +52,9 @@ func OpenWindowVersion(width int32, height int32, title string, major int, minor
 
 	glfwin.MakeContextCurrent()
 
-	window.Projection = mgl32.Ortho2D(-20.0, 20.0, -15.0, 15.0)
+	ratio := float32(width) / float32(height)
+
+	window.Projection = mgl32.Ortho2D(-10*ratio, 10*ratio, -10.0, 10.0)
 	window.glfwWindow = glfwin
 
 	glfw.SwapInterval(1)

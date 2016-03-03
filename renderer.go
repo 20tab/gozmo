@@ -22,8 +22,8 @@ type Mesh struct {
 
 	abid uint32
 
-	addColor      mgl32.Vec4
-	mulColor      mgl32.Vec4
+	addColor mgl32.Vec4
+	mulColor mgl32.Vec4
 }
 
 type Renderer struct {
@@ -73,7 +73,6 @@ func (renderer *Renderer) createMesh() {
 func NewRenderer(texture *Texture) *Renderer {
 	// default 100 pixels per unit (like in Unity3D)
 	renderer := Renderer{texture: texture, pixelsPerUnit: 100}
-
 
 	if texture != nil {
 		renderer.textureName = texture.Name

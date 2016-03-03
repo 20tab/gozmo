@@ -12,10 +12,9 @@ import (
 )
 
 type BoxRenderer struct {
-
 	mesh *Mesh
 
-	Width float32
+	Width  float32
 	Height float32
 }
 
@@ -26,21 +25,21 @@ func NewBoxRenderer(width, height float32) *BoxRenderer {
 	box := BoxRenderer{Width: width, Height: height}
 
 	if shader == -1 {
-                shader = int32(GLShader())
-        }
+		shader = int32(GLShader())
+	}
 
 	mesh := Mesh{}
-        mesh.abid = GLNewArray()
-        mesh.vbid = GLNewBuffer()
+	mesh.abid = GLNewArray()
+	mesh.vbid = GLNewBuffer()
 
-        mesh.vertices = []float32{-1, -1,
-                -1, 1,
-                1, -1,
-                1, -1,
-                1, 1,
-                -1, 1}
+	mesh.vertices = []float32{-1, -1,
+		-1, 1,
+		1, -1,
+		1, -1,
+		1, 1,
+		-1, 1}
 
-        GLBufferData(0, mesh.vbid, mesh.vertices)
+	GLBufferData(0, mesh.vbid, mesh.vertices)
 
 	mesh.mulColor = mgl32.Vec4{1, 1, 1, 1}
 
@@ -63,18 +62,18 @@ func (box *BoxRenderer) Update(gameObject *GameObject) {
 }
 
 func (box *BoxRenderer) SetAttr(attr string, value interface{}) error {
-	switch(attr) {
+	switch attr {
 	case "red":
 	case "r":
 		box.mesh.addColor[0], _ = CastFloat32(value)
-        case "green":
-        case "g":
+	case "green":
+	case "g":
 		box.mesh.addColor[1], _ = CastFloat32(value)
-        case "blue":
-        case "b":
+	case "blue":
+	case "b":
 		box.mesh.addColor[2], _ = CastFloat32(value)
-        case "alpha":
-        case "a":
+	case "alpha":
+	case "a":
 		box.mesh.addColor[3], _ = CastFloat32(value)
 	}
 	return nil

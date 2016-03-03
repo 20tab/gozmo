@@ -126,7 +126,6 @@ func addComponents(gameObject *GameObject, components []interface{}) {
 				args = argsList
 			}
 		}
-		
 
 		gameObject.AddComponentName(componentName.(string), componentType.(string), args)
 	}
