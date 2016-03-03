@@ -118,7 +118,17 @@ func addComponents(gameObject *GameObject, components []interface{}) {
 			panic("component requires a type")
 		}
 
-		gameObject.AddComponentName(componentName.(string), componentType.(string), nil)
+		var args []interface{} = nil
+		argsItem, ok := componentMap["args"]
+		if ok {
+			argsList, ok := argsItem.([]interface{})
+			if ok {
+				args = argsList
+			}
+		}
+		
+
+		gameObject.AddComponentName(componentName.(string), componentType.(string), args)
 	}
 }
 

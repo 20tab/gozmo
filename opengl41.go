@@ -78,20 +78,23 @@ var uvDeltaUniform int32 = -1
 var addColorUniform int32 = -1
 var mulColorUniform int32 = -1
 
-func GLDraw(renderer *Renderer, shader uint32, width float32, height float32, uvx, uvy, uvw, uvh float32, ortho mgl32.Mat4) {
-	mesh := renderer.mesh
-	texture := renderer.texture
+func GLDraw(mesh *Mesh, shader uint32, width float32, height float32, textureId int32, uvx, uvy, uvw, uvh float32, ortho mgl32.Mat4) {
 	gl.UseProgram(shader)
 	gl.Uniform2f(boundsUniform, width, height)
 	gl.Uniform4f(uvDeltaUniform, uvx, uvy, uvw, uvh)
-	addColor := renderer.addColor
+	addColor := mesh.addColor
 	gl.Uniform4f(addColorUniform, addColor[0], addColor[1], addColor[2], addColor[3])
-	mulColor := renderer.mulColor
+	mulColor := mesh.mulColor
 	gl.Uniform4f(mulColorUniform, mulColor[0], mulColor[1], mulColor[2], mulColor[3])
 	gl.UniformMatrix4fv(orthoUniform, 1, false, &ortho[0])
 	gl.BindVertexArray(mesh.abid)
-	gl.ActiveTexture(gl.TEXTURE0)
-	gl.BindTexture(gl.TEXTURE_2D, texture.tid)
+	if textureId > -1 {
+		gl.ActiveTexture(gl.TEXTURE0)
+		gl.BindTexture(gl.TEXTURE_2D, uint32(textureId))
+	} else {
+		// disable texture
+		gl.BindTexture(gl.TEXTURE_2D, 0)
+	}
 	gl.DrawArrays(gl.TRIANGLES, 0, int32(len(mesh.vertices)/2))
 }
 

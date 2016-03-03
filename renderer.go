@@ -21,6 +21,9 @@ type Mesh struct {
 	uvbid uint32
 
 	abid uint32
+
+	addColor      mgl32.Vec4
+	mulColor      mgl32.Vec4
 }
 
 type Renderer struct {
@@ -29,8 +32,6 @@ type Renderer struct {
 	textureName   string
 	pixelsPerUnit uint32
 	index         uint32
-	addColor      mgl32.Vec4
-	mulColor      mgl32.Vec4
 }
 
 var shader int32 = -1
@@ -60,6 +61,8 @@ func (renderer *Renderer) createMesh() {
 		1, 0,
 		0, 0}
 
+	mesh.mulColor = mgl32.Vec4{1, 1, 1, 1}
+
 	GLBufferData(0, mesh.vbid, mesh.vertices)
 
 	GLBufferData(1, mesh.uvbid, mesh.uvs)
@@ -71,7 +74,6 @@ func NewRenderer(texture *Texture) *Renderer {
 	// default 100 pixels per unit (like in Unity3D)
 	renderer := Renderer{texture: texture, pixelsPerUnit: 100}
 
-	renderer.mulColor = mgl32.Vec4{1, 1, 1, 1}
 
 	if texture != nil {
 		renderer.textureName = texture.Name
@@ -123,7 +125,7 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 
 	ortho := Engine.Window.Projection.Mul4(model)
 
-	GLDraw(renderer, uint32(shader), width, height, uvx, uvy, uvw, uvh, ortho)
+	GLDraw(renderer.mesh, uint32(shader), width, height, int32(renderer.texture.tid), uvx, uvy, uvw, uvh, ortho)
 }
 
 func (renderer *Renderer) SetPixelsPerUnit(pixels uint32) {
@@ -149,56 +151,56 @@ func (renderer *Renderer) SetAttr(attr string, value interface{}) error {
 	case "addR":
 		color, ok := value.(float32)
 		if ok {
-			renderer.addColor[0] = color
+			renderer.mesh.addColor[0] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
 	case "addG":
 		color, ok := value.(float32)
 		if ok {
-			renderer.addColor[1] = color
+			renderer.mesh.addColor[1] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
 	case "addB":
 		color, ok := value.(float32)
 		if ok {
-			renderer.addColor[2] = color
+			renderer.mesh.addColor[2] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
 	case "addA":
 		color, ok := value.(float32)
 		if ok {
-			renderer.addColor[3] = color
+			renderer.mesh.addColor[3] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
 	case "mulR":
 		color, ok := value.(float32)
 		if ok {
-			renderer.mulColor[0] = color
+			renderer.mesh.mulColor[0] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
 	case "mulG":
 		color, ok := value.(float32)
 		if ok {
-			renderer.mulColor[1] = color
+			renderer.mesh.mulColor[1] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
 	case "mulB":
 		color, ok := value.(float32)
 		if ok {
-			renderer.mulColor[2] = color
+			renderer.mesh.mulColor[2] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
 	case "mulA":
 		color, ok := value.(float32)
 		if ok {
-			renderer.mulColor[3] = color
+			renderer.mesh.mulColor[3] = color
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
@@ -213,21 +215,21 @@ func (renderer *Renderer) GetAttr(attr string) (interface{}, error) {
 	case "texture":
 		return renderer.textureName, nil
 	case "addR":
-		return renderer.addColor[0], nil
+		return renderer.mesh.addColor[0], nil
 	case "addG":
-		return renderer.addColor[1], nil
+		return renderer.mesh.addColor[1], nil
 	case "addB":
-		return renderer.addColor[2], nil
+		return renderer.mesh.addColor[2], nil
 	case "addA":
-		return renderer.addColor[3], nil
+		return renderer.mesh.addColor[3], nil
 	case "mulR":
-		return renderer.mulColor[0], nil
+		return renderer.mesh.mulColor[0], nil
 	case "mulG":
-		return renderer.mulColor[1], nil
+		return renderer.mesh.mulColor[1], nil
 	case "mulB":
-		return renderer.mulColor[2], nil
+		return renderer.mesh.mulColor[2], nil
 	case "mulA":
-		return renderer.mulColor[3], nil
+		return renderer.mesh.mulColor[3], nil
 	}
 	return nil, fmt.Errorf("%v attribute of %T not found", attr, renderer)
 }
