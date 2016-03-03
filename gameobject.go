@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-gl/mathgl/mgl32"
 	"math"
+	"sort"
 )
 
 type GameObject struct {
@@ -11,7 +12,8 @@ type GameObject struct {
 	// and messing with internal data ?
 	Name    string
 	enabled bool
-	order   int32
+	order   int
+	index int
 
 	Scene *Scene
 
@@ -36,6 +38,9 @@ func (scene *Scene) NewGameObject(name string) *GameObject {
 	gameObject.Scene = scene
 	gameObject.Scale = mgl32.Vec2{1, 1}
 	scene.gameObjects[name] = &gameObject
+	// a -1 index means a still not mapped gameObject
+	gameObject.index = -1
+	gameObject.SetOrder(0)
 	return &gameObject
 }
 
@@ -51,7 +56,29 @@ func (gameObject *GameObject) AddComponentName(name string, componentName string
 	return gameObject.AddComponent(name, component)
 }
 
-func (gameObject *GameObject) SetOrder(order int32) {
+func (gameObject *GameObject) SetOrder(order int) {
+	scene := gameObject.Scene
+	_, ok := scene.orderedGameObjects[order]
+	if !ok {
+		// create a new slice of gameObjects
+		scene.orderedGameObjects[order] = make([]*GameObject, 0)
+		// add the new key (a number)
+		scene.orderedKeys = append(scene.orderedKeys, order)
+		// sort them
+		sort.Ints(scene.orderedKeys)
+	}
+
+	if gameObject.index > -1 {
+		scene.orderedGameObjects[gameObject.order] = append(scene.orderedGameObjects[gameObject.order][:gameObject.index], scene.orderedGameObjects[gameObject.order][gameObject.index+1:]...)
+		// NOTE it would be cool to remove an unused order layer, but it will make things really complex...
+		// just remove the gameObject from the list
+	}
+	// set the index (for future removal)
+	gameObject.index = len(scene.orderedGameObjects[order])
+	// set new order
+	gameObject.order = order
+	// append it
+	scene.orderedGameObjects[order] = append(scene.orderedGameObjects[order], gameObject)
 }
 
 func (gameObject *GameObject) SetScale(x, y float32) {

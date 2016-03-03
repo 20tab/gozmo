@@ -1,13 +1,14 @@
 package main
 
 import (
-	goz "github.com/20tab/gozmo"
 	"fmt"
+	goz "github.com/20tab/gozmo"
 )
 
 type ShowPos struct {
 	mouse *goz.Mouse
 }
+
 func (showPos *ShowPos) Start(gameObject *goz.GameObject) {}
 func (showPos *ShowPos) Update(gameObject *goz.GameObject) {
 	fmt.Println("x =", showPos.mouse.X())

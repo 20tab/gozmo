@@ -4,7 +4,7 @@ package gozmo
 
 /*
 
-*/
+ */
 
 import (
 	_ "github.com/go-gl/glfw/v3.1/glfw"
@@ -30,9 +30,9 @@ func (mouse *Mouse) X() float32 {
 		x = 0
 	}
 	if x > 1024-1 {
-		x = 1024-1
+		x = 1024 - 1
 	}
-	vecScreen := mgl32.Vec4{ float32(2 * x/1024) -1, float32(2*y/576) -1, 0, 1 }
+	vecScreen := mgl32.Vec4{float32(2*x/1024) - 1, float32(2*y/576) - 1, 0, 1}
 	vecWorld := Engine.Window.Projection.Inv().Mul4x1(vecScreen)
 	return vecWorld[0]
 }

@@ -23,19 +23,23 @@ type Scene struct {
 	animations  map[string]*Animation
 	// this contains the last timestamp of the engine
 	lastTime float64
+	orderedGameObjects map[int][]*GameObject
+	orderedKeys []int
 }
 
 func (scene *Scene) Update(now float64) {
 	deltaTime := float32(now - scene.lastTime)
 	scene.lastTime = now
 
-	for _, gameObject := range scene.gameObjects {
+	for _, order := range scene.orderedKeys {
+		for _, gameObject := range scene.orderedGameObjects[order] {
 		if !gameObject.enabled {
 			continue
 		}
 		gameObject.DeltaTime = deltaTime
 		for _, key := range gameObject.componentsKeys {
 			gameObject.components[key].Update(gameObject)
+		}
 		}
 	}
 
@@ -49,6 +53,8 @@ func (window *Window) NewScene(name string) *Scene {
 	scene.gameObjects = make(map[string]*GameObject)
 	scene.textures = make(map[string]*Texture)
 	scene.animations = make(map[string]*Animation)
+
+	scene.orderedGameObjects = make(map[int][]*GameObject)
 	window.scenes[name] = &scene
 	return &scene
 }

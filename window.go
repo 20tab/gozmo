@@ -16,7 +16,7 @@ type Window struct {
 	glfwWindow   *glfw.Window
 	scenes       map[string]*Scene
 	currentScene *Scene
-	Projection    mgl32.Mat4
+	Projection   mgl32.Mat4
 }
 
 func OpenWindowVersion(width int32, height int32, title string, major int, minor int) *Window {
