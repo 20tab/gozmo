@@ -17,7 +17,7 @@ func (showPos *ShowPos) Update(gameObject *goz.GameObject) {
 func main() {
 	window := goz.OpenWindow(1024, 576, "Mouse")
 
-	scene := window.NewScene("Mouse Manager")
+	scene := goz.NewScene("Mouse Manager")
 
 	cursor := scene.NewGameObject("Cursor")
 

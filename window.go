@@ -14,7 +14,6 @@ type Window struct {
 	height       int32
 	title        string
 	glfwWindow   *glfw.Window
-	scenes       map[string]*Scene
 	currentScene *Scene
 	Projection   mgl32.Mat4
 }
@@ -26,7 +25,9 @@ func OpenWindowVersion(width int32, height int32, title string, major int, minor
 	runtime.LockOSThread()
 	window := Window{width: width, height: height, title: title}
 
-	window.scenes = make(map[string]*Scene)
+	if Engine.scenes == nil {
+		Engine.scenes = make(map[string]*Scene)
+	}
 
 	if err := glfw.Init(); err != nil {
 		log.Fatalln("failed to initialize glfw:", err)
@@ -94,4 +95,12 @@ func (window *Window) Run() {
 
 func (window *Window) getKey(kc Key) bool {
 	return window.glfwWindow.GetKey(glfw.Key(kc)) == glfw.Press
+}
+
+func (window *Window) SetScene(scene *Scene) {
+        window.currentScene = scene
+}
+
+func (window *Window) SetSceneByName(sceneName string) {
+        window.currentScene = Engine.scenes[sceneName]
 }

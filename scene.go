@@ -48,23 +48,15 @@ func (scene *Scene) Update(now float64) {
 	}
 }
 
-func (window *Window) NewScene(name string) *Scene {
+func NewScene(name string) *Scene {
 	scene := Scene{Name: name}
 	scene.gameObjects = make(map[string]*GameObject)
 	scene.textures = make(map[string]*Texture)
 	scene.animations = make(map[string]*Animation)
 
 	scene.orderedGameObjects = make(map[int][]*GameObject)
-	window.scenes[name] = &scene
+	Engine.scenes[name] = &scene
 	return &scene
-}
-
-func (window *Window) SetScene(scene *Scene) {
-	window.currentScene = scene
-}
-
-func (window *Window) SetSceneByName(sceneName string) {
-	window.currentScene = window.scenes[sceneName]
 }
 
 func loadTextures(scene *Scene, textures []interface{}) {
@@ -232,7 +224,7 @@ func loadAnimations(scene *Scene, animations []interface{}) {
 	}
 }
 
-func (window *Window) NewSceneFilename(fileName string) *Scene {
+func NewSceneFromFilename(fileName string) *Scene {
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		panic(err)
@@ -250,7 +242,7 @@ func (window *Window) NewSceneFilename(fileName string) *Scene {
 		panic("a scene requires a name")
 	}
 
-	scene := window.NewScene(name.(string))
+	scene := NewScene(name.(string))
 
 	for key, value := range parsed {
 		switch key {
@@ -283,5 +275,5 @@ func (scene *Scene) Destroy() {
 	}
 
 	// remove the scene from the map, so the GC can make its job
-	delete(Engine.Window.scenes, scene.Name)
+	delete(Engine.scenes, scene.Name)
 }

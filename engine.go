@@ -12,6 +12,7 @@ type EngineSingleton struct {
 	Window               *Window
 	registeredComponents map[string]*RegisteredComponent
 	registeredUpdaters   []func(scene *Scene, deltaTime float32)
+	scenes       map[string]*Scene
 }
 
 var Engine EngineSingleton
