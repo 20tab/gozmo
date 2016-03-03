@@ -13,7 +13,7 @@ type GameObject struct {
 	Name    string
 	enabled bool
 	order   int
-	index int
+	index   int
 
 	Scene *Scene
 
