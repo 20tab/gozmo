@@ -103,8 +103,8 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 	texture := renderer.texture
 
 	// recompute mesh size based on the texture
-	width := float32(texture.Width) / float32(texture.Cols) / float32(renderer.pixelsPerUnit)
-	height := float32(texture.Height) / float32(texture.Rows) / float32(renderer.pixelsPerUnit)
+	width := float32(texture.Width) / float32(texture.Cols) / float32(renderer.pixelsPerUnit) / 2
+	height := float32(texture.Height) / float32(texture.Rows) / float32(renderer.pixelsPerUnit) / 2
 
 	// recompute uvs based on index
 	idxX := renderer.index % texture.Cols
