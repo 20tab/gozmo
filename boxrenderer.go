@@ -41,7 +41,7 @@ func NewBoxRenderer(width, height float32) *BoxRenderer {
 
 	GLBufferData(0, mesh.vbid, mesh.vertices)
 
-	mesh.mulColor = mgl32.Vec4{1, 1, 1, 1}
+	mesh.mulColor = mgl32.Vec4{0, 0, 0, 0}
 
 	box.mesh = &mesh
 
