@@ -43,10 +43,12 @@ func (rbody *RigidBody) Update(gameObject *goz.GameObject) {
 	if !rbody.initialized {
 		pos := gameObject.Position
 		rbody.body.SetPosition(vect.Vect{vect.Float(pos[0]), vect.Float(pos[1])})
+		rbody.body.SetAngle(vect.Float(gameObject.Rotation))
 		rbody.initialized = true
 	}
 	pos := rbody.body.Position()
 	gameObject.SetPosition(float32(pos.X), float32(pos.Y))
+	gameObject.Rotation = float32(rbody.body.Angle())
 }
 
 func (rbody *RigidBody) GetType() string {
@@ -98,10 +100,12 @@ func (sbody *StaticBody) Update(gameObject *goz.GameObject) {
 	if !sbody.initialized {
 		pos := gameObject.Position
 		sbody.body.SetPosition(vect.Vect{vect.Float(pos[0]), vect.Float(pos[1])})
+		sbody.body.SetAngle(vect.Float(gameObject.Rotation))
 		sbody.initialized = true
 	}
 	pos := sbody.body.Position()
 	gameObject.SetPosition(float32(pos.X), float32(pos.Y))
+	gameObject.Rotation = float32(sbody.body.Angle())
 }
 
 func (sbody *StaticBody) GetType() string {
