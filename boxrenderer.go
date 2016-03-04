@@ -1,16 +1,11 @@
 package gozmo
 
-/*
-
-an alternative renderer used for simple boxes
-
-*/
-
 import (
 	_ "fmt"
 	"github.com/go-gl/mathgl/mgl32"
 )
 
+// An alternative renderer used for simple solid-color boxes
 type BoxRenderer struct {
 	mesh *Mesh
 
