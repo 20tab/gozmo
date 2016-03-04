@@ -56,7 +56,9 @@ func (box *BoxRenderer) Update(gameObject *GameObject) {
 
 	model = model.Mul4(mgl32.HomogRotate3DZ(gameObject.Rotation))
 
-	ortho := Engine.Window.Projection.Mul4(model)
+	view := Engine.Window.View.Mul4(model)
+
+	ortho := Engine.Window.Projection.Mul4(view)
 
 	GLDraw(box.mesh, uint32(shader), box.Width/2, box.Height/2, -1, 0, 0, 0, 0, ortho)
 }
