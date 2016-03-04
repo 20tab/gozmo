@@ -16,6 +16,7 @@ type Window struct {
 	glfwWindow   *glfw.Window
 	currentScene *Scene
 	Projection   mgl32.Mat4
+	View         mgl32.Mat4
 }
 
 func OpenWindowVersion(width int32, height int32, title string, major int, minor int) *Window {
@@ -52,6 +53,7 @@ func OpenWindowVersion(width int32, height int32, title string, major int, minor
 	ratio := float32(width) / float32(height)
 
 	window.Projection = mgl32.Ortho2D(-10*ratio, 10*ratio, -10.0, 10.0)
+	window.View = mgl32.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0)
 	window.glfwWindow = glfwin
 
 	glfw.SwapInterval(1)

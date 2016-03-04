@@ -122,7 +122,9 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 
 	model = model.Mul4(mgl32.HomogRotate3DZ(gameObject.Rotation))
 
-	ortho := Engine.Window.Projection.Mul4(model)
+	view := Engine.Window.View.Mul4(model)
+
+	ortho := Engine.Window.Projection.Mul4(view)
 
 	GLDraw(renderer.mesh, uint32(shader), width, height, int32(renderer.texture.tid), uvx, uvy, uvw, uvh, ortho)
 }
