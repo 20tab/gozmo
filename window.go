@@ -25,10 +25,6 @@ func OpenWindowVersion(width int32, height int32, title string, major int, minor
 	runtime.LockOSThread()
 	window := Window{width: width, height: height, title: title}
 
-	if Engine.scenes == nil {
-		Engine.scenes = make(map[string]*Scene)
-	}
-
 	if err := glfw.Init(); err != nil {
 		log.Fatalln("failed to initialize glfw:", err)
 	}

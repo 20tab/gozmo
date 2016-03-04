@@ -55,6 +55,11 @@ func NewScene(name string) *Scene {
 	scene.animations = make(map[string]*Animation)
 
 	scene.orderedGameObjects = make(map[int][]*GameObject)
+
+	if Engine.scenes == nil {
+		Engine.scenes = make(map[string]*Scene)
+	}
+
 	Engine.scenes[name] = &scene
 	return &scene
 }
