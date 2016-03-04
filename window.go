@@ -98,9 +98,9 @@ func (window *Window) getKey(kc Key) bool {
 }
 
 func (window *Window) SetScene(scene *Scene) {
-        window.currentScene = scene
+	window.currentScene = scene
 }
 
 func (window *Window) SetSceneByName(sceneName string) {
-        window.currentScene = Engine.scenes[sceneName]
+	window.currentScene = Engine.scenes[sceneName]
 }
