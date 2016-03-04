@@ -1,0 +1,117 @@
+{
+	"name": "Scene 001",
+	"textures": [
+		{ "name": "bg0", "filename": "assets/platform_bg_0.png" },
+		{ "name": "bg1", "filename": "assets/platform_bg_1.png" },
+		{ "name": "bg2", "filename": "assets/platform_bg_2.png" },
+		{ "name": "bg3", "filename": "assets/platform_bg_3.png" },
+		{ "name": "bg4", "filename": "assets/platform_bg_4.png" },
+		{ "name": "bg5", "filename": "assets/platform_bg_5.png" },
+		{ "name": "bg6", "filename": "assets/platform_bg_6.png" },
+		{ "name": "bg7", "filename": "assets/platform_bg_7.png" },
+		{ "name": "bg8", "filename": "assets/platform_bg_8.png" },
+		{ "name": "bg9", "filename": "assets/platform_bg_9.png" }
+	],
+	"objects": [
+		{
+			"name": "bg_0_0",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg0"}
+			]
+		},
+		{
+			"name": "bg_1_0",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg1"}
+			]
+		},
+		{
+			"name": "bg_2_0",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg2"}
+			]
+		},
+		{
+			"name": "bg_3_0",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg3"}
+			]
+		},
+		{
+			"name": "bg_4_0",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg4"}
+			]
+		},
+		{
+			"name": "bg_0_1",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg5"}
+			]
+		},
+		{
+			"name": "bg_1_1",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg6"}
+			]
+		},
+		{
+			"name": "bg_2_1",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg7"}
+			]
+		},
+		{
+			"name": "bg_3_1",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg8"}
+			]
+		},
+		{
+			"name": "bg_4_1",
+			"components": [
+				{ "name": "bgrenderer", "type": "Renderer" }
+			],
+			"attrs": [
+				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "texture", "value": "bg9"}
+			]
+		}
+	]
+}

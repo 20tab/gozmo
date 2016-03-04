@@ -24,9 +24,11 @@ const (
 	KeyA Key = Key(glfw.KeyA)
 	KeyB Key = Key(glfw.KeyB)
 	KeyC Key = Key(glfw.KeyC)
+	KeyD Key = Key(glfw.KeyD)
 	KeyP Key = Key(glfw.KeyP)
 	KeyS Key = Key(glfw.KeyS)
 	KeyT Key = Key(glfw.KeyT)
+	KeyW Key = Key(glfw.KeyW)
 
 	KeyEsc Key = Key(glfw.KeyEscape)
 )
@@ -38,6 +40,10 @@ the "compositors" life
 
 */
 var KeyboardAttr map[string]Key = map[string]Key{
+	"A":     KeyA,
+	"D":     KeyD,
+	"S":     KeyS,
+	"W":     KeyW,
 	"Right": KeyRight,
 	"Left":  KeyLeft,
 	"Up":    KeyUp,
