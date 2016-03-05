@@ -44,6 +44,14 @@ func (scene *Scene) NewGameObject(name string) *GameObject {
 	return &gameObject
 }
 
+func (scene *Scene) FindGameObject(name string) *GameObject {
+	gameObject, ok := scene.gameObjects[name]
+	if !ok {
+		return nil
+	}
+	return gameObject
+}
+
 func (gameObject *GameObject) AddComponent(name string, component Component) Component {
 	gameObject.components[name] = component
 	gameObject.componentsKeys = append(gameObject.componentsKeys, name)

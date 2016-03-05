@@ -32,6 +32,7 @@ type Renderer struct {
 	textureName   string
 	pixelsPerUnit uint32
 	index         uint32
+	forceHeight   float32
 }
 
 var shader int32 = -1
@@ -103,8 +104,15 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 	texture := renderer.texture
 
 	// recompute mesh size based on the texture
-	width := float32(texture.Width) / float32(texture.Cols) / float32(renderer.pixelsPerUnit) / 2
-	height := float32(texture.Height) / float32(texture.Rows) / float32(renderer.pixelsPerUnit) / 2
+	var width float32
+	var height float32
+	if renderer.forceHeight > 0 {
+		height = renderer.forceHeight / 2
+		width = renderer.forceHeight * ((float32(texture.Width) / float32(texture.Cols)) / (float32(texture.Height) / float32(texture.Rows))) / 2
+	} else {
+		width = float32(texture.Width) / float32(texture.Cols) / float32(renderer.pixelsPerUnit) / 2
+		height = float32(texture.Height) / float32(texture.Rows) / float32(renderer.pixelsPerUnit) / 2
+	}
 
 	// recompute uvs based on index
 	idxX := renderer.index % texture.Cols
@@ -202,6 +210,13 @@ func (renderer *Renderer) SetAttr(attr string, value interface{}) error {
 		color, ok := value.(float32)
 		if ok {
 			renderer.mesh.mulColor[3] = color
+			return nil
+		}
+		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)
+	case "forceHeight":
+		height, err := CastFloat32(value)
+		if err == nil {
+			renderer.forceHeight = height
 			return nil
 		}
 		return fmt.Errorf("%v attribute of %T expects a float32", attr, renderer)

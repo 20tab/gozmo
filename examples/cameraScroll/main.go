@@ -4,7 +4,7 @@ import (
 	goz "github.com/20tab/gozmo"
 )
 
-var cameraSpeed float32 = 3
+var cameraSpeed float32 = 5
 
 type CameraMover struct{}
 
@@ -41,6 +41,10 @@ func main() {
 	camera.AddComponent("camera", goz.NewCamera())
 	camera.AddComponent("kbd", goz.NewKeyboard())
 	camera.AddComponent("mover", &CameraMover{})
+
+	rightLimit := scene.FindGameObject("bg_4_0").Position[0]
+
+	camera.AddComponent("cage", goz.NewCage(0, 0, -20, rightLimit))
 
 	window.SetScene(scene)
 	window.Run()

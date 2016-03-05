@@ -19,7 +19,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 0},
 				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg0"}
 			]
 		},
@@ -29,7 +31,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 35.5554},
 				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg1"}
 			]
 		},
@@ -39,7 +43,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 71.1108},
 				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg2"}
 			]
 		},
@@ -49,7 +55,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 106.6662},
 				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg3"}
 			]
 		},
@@ -59,7 +67,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 142.2216},
 				{ "component": "", "key": "positionY", "value": 0},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg4"}
 			]
 		},
@@ -69,7 +79,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 0},
 				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg5"}
 			]
 		},
@@ -79,7 +91,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 35.5554},
 				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg6"}
 			]
 		},
@@ -89,7 +103,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 71.1108},
 				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg7"}
 			]
 		},
@@ -99,7 +115,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 106.6662},
 				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg8"}
 			]
 		},
@@ -109,7 +127,9 @@
 				{ "name": "bgrenderer", "type": "Renderer" }
 			],
 			"attrs": [
+				{ "component": "", "key": "positionX", "value": 142.2216},
 				{ "component": "", "key": "positionY", "value": -20},
+				{ "component": "bgrenderer", "key": "forceHeight", "value": 20},
 				{ "component": "bgrenderer", "key": "texture", "value": "bg9"}
 			]
 		}
