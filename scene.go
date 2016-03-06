@@ -46,6 +46,8 @@ func (scene *Scene) Update(now float64) {
 	for _, updater := range Engine.registeredUpdaters {
 		updater(scene, deltaTime)
 	}
+
+	UpdatePerFrameStats()
 }
 
 func NewScene(name string) *Scene {

@@ -17,6 +17,9 @@ type Window struct {
 	currentScene *Scene
 	Projection   mgl32.Mat4
 	View         mgl32.Mat4
+
+	OrthographicSize float32
+	AspectRatio      float32
 }
 
 func OpenWindowVersion(width int32, height int32, title string, major int, minor int) *Window {
@@ -50,9 +53,11 @@ func OpenWindowVersion(width int32, height int32, title string, major int, minor
 
 	glfwin.MakeContextCurrent()
 
-	ratio := float32(width) / float32(height)
+	window.OrthographicSize = 10
 
-	window.Projection = mgl32.Ortho2D(-10*ratio, 10*ratio, -10.0, 10.0)
+	window.AspectRatio = float32(width) / float32(height)
+
+	window.Projection = mgl32.Ortho2D(-window.OrthographicSize*window.AspectRatio, window.OrthographicSize*window.AspectRatio, -window.OrthographicSize, window.OrthographicSize)
 	window.View = mgl32.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0)
 	window.glfwWindow = glfwin
 

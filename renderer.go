@@ -114,6 +114,23 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 		height = float32(texture.Height) / float32(texture.Rows) / float32(renderer.pixelsPerUnit) / 2
 	}
 
+	// out-of-view culling, avoid drawing quads that are out of the view quad
+	// extract view sizes
+	viewWidth := Engine.Window.OrthographicSize * Engine.Window.AspectRatio * 2
+	viewHeight := Engine.Window.OrthographicSize * 2
+	viewX := -Engine.Window.View[12] - (viewWidth/2)
+	viewY := -Engine.Window.View[13] + (viewHeight/2)
+
+	// now check if the object bounds are out of the view
+	objX := gameObject.Position[0] - width
+	objY := gameObject.Position[1] + height
+	if ((objX + (width * 2)) < viewX ||
+		objX > (viewX + viewWidth) ||
+		(objY - (height * 2)) > viewY ||
+		objY < (viewY - viewHeight)) {
+		return
+	}
+
 	// recompute uvs based on index
 	idxX := renderer.index % texture.Cols
 	idxY := renderer.index / texture.Cols
@@ -133,6 +150,8 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 	view := Engine.Window.View.Mul4(model)
 
 	ortho := Engine.Window.Projection.Mul4(view)
+
+	IncPerFrameStats("GL.DrawCalls", 1)
 
 	GLDraw(renderer.mesh, uint32(shader), width, height, int32(renderer.texture.tid), uvx, uvy, uvw, uvh, ortho)
 }
