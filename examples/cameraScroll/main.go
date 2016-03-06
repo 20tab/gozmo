@@ -1,8 +1,8 @@
 package main
 
 import (
-	goz "github.com/20tab/gozmo"
 	"fmt"
+	goz "github.com/20tab/gozmo"
 )
 
 var cameraSpeed float32 = 5
@@ -32,9 +32,10 @@ func (mover *CameraMover) Update(gameObject *goz.GameObject) {
 	gameObject.AddPosition(x, y)
 }
 
-type DrawCallsPrinter struct{
+type DrawCallsPrinter struct {
 	lastValue float64
 }
+
 func (dcp *DrawCallsPrinter) Start(gameObject *goz.GameObject) {}
 func (dcp *DrawCallsPrinter) Update(gameObject *goz.GameObject) {
 	newValue := goz.GetPerFrameStats("GL.DrawCalls")

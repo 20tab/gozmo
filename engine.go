@@ -13,7 +13,7 @@ type EngineSingleton struct {
 	registeredComponents map[string]*RegisteredComponent
 	registeredUpdaters   []func(scene *Scene, deltaTime float32)
 	scenes               map[string]*Scene
-	perFrameStats		map[string]float64
+	perFrameStats        map[string]float64
 }
 
 var Engine EngineSingleton

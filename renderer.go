@@ -118,16 +118,16 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 	// extract view sizes
 	viewWidth := Engine.Window.OrthographicSize * Engine.Window.AspectRatio * 2
 	viewHeight := Engine.Window.OrthographicSize * 2
-	viewX := -Engine.Window.View[12] - (viewWidth/2)
-	viewY := -Engine.Window.View[13] + (viewHeight/2)
+	viewX := -Engine.Window.View[12] - (viewWidth / 2)
+	viewY := -Engine.Window.View[13] + (viewHeight / 2)
 
 	// now check if the object bounds are out of the view
 	objX := gameObject.Position[0] - width
 	objY := gameObject.Position[1] + height
-	if ((objX + (width * 2)) < viewX ||
-		objX > (viewX + viewWidth) ||
-		(objY - (height * 2)) > viewY ||
-		objY < (viewY - viewHeight)) {
+	if (objX+(width*2)) < viewX ||
+		objX > (viewX+viewWidth) ||
+		(objY-(height*2)) > viewY ||
+		objY < (viewY-viewHeight) {
 		return
 	}
 
