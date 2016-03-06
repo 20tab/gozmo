@@ -35,6 +35,18 @@ func (cross *CrossMove) Update(gameObject *goz.GameObject) {
 	}
 }
 
+type DrawCallsPrinter struct{
+        lastValue float64
+}
+func (dcp *DrawCallsPrinter) Start(gameObject *goz.GameObject) {}
+func (dcp *DrawCallsPrinter) Update(gameObject *goz.GameObject) {
+        newValue := goz.GetPerFrameStats("GL.DrawCalls")
+        if newValue != dcp.lastValue {
+                fmt.Println("GL.DrawCalls =", newValue)
+        }
+        dcp.lastValue = newValue
+}
+
 func main() {
 
 	window := goz.OpenWindow(1024, 768, "Gozmo")
@@ -57,6 +69,11 @@ func main() {
 
 	// and add another one by reference
 	spyke.AddComponent("move_with_arrows", &CrossMove{kbd: keyboard})
+
+	stats := scene001.NewGameObject("Stats")
+        // ensure stats are managed last
+        stats.SetOrder(9999)
+        stats.AddComponent("stats", &DrawCallsPrinter{})
 
 	window.SetScene(scene001)
 	window.Run()
