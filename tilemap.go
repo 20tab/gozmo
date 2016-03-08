@@ -7,8 +7,11 @@ a simple tilemap tilemap using a single mesh for the whole level
 */
 
 import (
+	"encoding/csv"
 	_ "fmt"
 	"github.com/go-gl/mathgl/mgl32"
+	"os"
+	"strconv"
 )
 
 type TileMap struct {
@@ -16,13 +19,44 @@ type TileMap struct {
 	texture *Texture
 
 	pixelsPerUnit uint32
+
+	data [][]int32
 }
 
 func NewTileMap(texture *Texture) *TileMap {
 	// default 100 pixels per unit (like in Unity3D)
 	tilemap := TileMap{texture: texture, pixelsPerUnit: 100}
-
 	return &tilemap
+}
+
+func NewTileMapFromCSVFilename(fileName string, texture *Texture) *TileMap {
+	csvfile, err := os.Open(fileName)
+	if err != nil {
+		panic(err)
+	}
+	defer csvfile.Close()
+
+	reader := csv.NewReader(csvfile)
+	reader.FieldsPerRecord = -1
+
+	data, err := reader.ReadAll()
+	if err != nil {
+		panic(err)
+	}
+
+	tilemap := NewTileMap(texture)
+
+	tilemap.data = make([][]int32, len(data))
+
+	for y, cols := range data {
+		tilemap.data[y] = make([]int32, len(cols))
+		for x, col := range cols {
+			value, _ := strconv.ParseInt(col, 10, 32)
+			tilemap.data[y][x] = int32(value)
+		}
+	}
+
+	return tilemap
 }
 
 func (tilemap *TileMap) Start(gameObject *GameObject) {
@@ -37,8 +71,8 @@ func (tilemap *TileMap) Start(gameObject *GameObject) {
 
 	//for y := 0; y > -30; y-- {
 	//for x := 0; x < 170; x++ {
-	for y := float32(0); y > -5; y-- {
-		for x := float32(0); x < 7; x++ {
+	for y := float32(0); y > float32(-len(tilemap.data)); y-- {
+		for x := float32(0); x < float32(len(tilemap.data[int(-y)])); x++ {
 			// x -1
 			mesh.vertices = append(mesh.vertices, 2*x-1)
 			// y -1
@@ -64,23 +98,33 @@ func (tilemap *TileMap) Start(gameObject *GameObject) {
 			// y 1
 			mesh.vertices = append(mesh.vertices, 2*y+1)
 
-			mesh.uvs = append(mesh.uvs, 0)
-			mesh.uvs = append(mesh.uvs, 1.0/11)
+			// compute uvs based on index
+			idxX := tilemap.data[int(-y)][int(x)] % int32(tilemap.texture.Cols)
+			idxY := tilemap.data[int(-y)][int(x)] / int32(tilemap.texture.Cols)
 
-			mesh.uvs = append(mesh.uvs, 0)
-			mesh.uvs = append(mesh.uvs, 0)
+			uvw := (1.0 / float32(tilemap.texture.Cols))
+			uvh := (1.0 / float32(tilemap.texture.Rows))
 
-			mesh.uvs = append(mesh.uvs, 1.0/12)
-			mesh.uvs = append(mesh.uvs, 1.0/11)
+			uvx := uvw * float32(idxX)
+			uvy := uvh * float32(idxY)
 
-			mesh.uvs = append(mesh.uvs, 1.0/12)
-			mesh.uvs = append(mesh.uvs, 1.0/11)
+			mesh.uvs = append(mesh.uvs, uvx)
+			mesh.uvs = append(mesh.uvs, uvh)
 
-			mesh.uvs = append(mesh.uvs, 1.0/12)
-			mesh.uvs = append(mesh.uvs, 0)
+			mesh.uvs = append(mesh.uvs, uvx)
+			mesh.uvs = append(mesh.uvs, uvy)
 
-			mesh.uvs = append(mesh.uvs, 0)
-			mesh.uvs = append(mesh.uvs, 0)
+			mesh.uvs = append(mesh.uvs, uvw)
+			mesh.uvs = append(mesh.uvs, uvh)
+
+			mesh.uvs = append(mesh.uvs, uvw)
+			mesh.uvs = append(mesh.uvs, uvh)
+
+			mesh.uvs = append(mesh.uvs, uvw)
+			mesh.uvs = append(mesh.uvs, uvy)
+
+			mesh.uvs = append(mesh.uvs, uvx)
+			mesh.uvs = append(mesh.uvs, uvy)
 		}
 	}
 
