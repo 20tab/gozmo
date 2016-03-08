@@ -84,7 +84,7 @@ func loadTextures(scene *Scene, textures []interface{}) {
 		var err error
 
 		if hasFilename {
-			tex, err = scene.NewTextureFilename(name.(string), filename.(string))
+			tex, err = scene.NewTextureFromFilename(name.(string), filename.(string))
 			if err != nil {
 				panic(err)
 			}

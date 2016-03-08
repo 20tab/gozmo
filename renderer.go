@@ -13,19 +13,6 @@ import (
 	"github.com/go-gl/mathgl/mgl32"
 )
 
-type Mesh struct {
-	vertices []float32
-	uvs      []float32
-
-	vbid  uint32
-	uvbid uint32
-
-	abid uint32
-
-	addColor mgl32.Vec4
-	mulColor mgl32.Vec4
-}
-
 type Renderer struct {
 	mesh          *Mesh
 	texture       *Texture
@@ -34,8 +21,6 @@ type Renderer struct {
 	index         uint32
 	forceHeight   float32
 }
-
-var shader int32 = -1
 
 // the mesh is created and uploaded into the GPU only when needed
 func (renderer *Renderer) createMesh() {

@@ -115,6 +115,11 @@ void main() {
 
     vec2 uv2 = uv;
 
+    if (uvdelta == vec4(0, 0, 0, 0)) {
+        uvout = uv2;
+        return;
+    }
+
     if (uv2.x == 0) {
         uv2.x = uvdelta.x;
     }

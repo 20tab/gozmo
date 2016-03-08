@@ -55,7 +55,7 @@ func main() {
 	scene001 := goz.NewScene("Scene 1")
 
 	// load a texture into the scene
-	scene001.NewTextureFilename("spyke_red", "assets/spyke_red.png")
+	scene001.NewTextureFromFilename("spyke_red", "assets/spyke_red.png")
 
 	fmt.Println("scene", scene001.Name, "created")
 

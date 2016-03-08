@@ -18,15 +18,15 @@ type Texture struct {
 	Cols   uint32
 }
 
-func (scene *Scene) NewTextureFilename(name string, fileName string) (*Texture, error) {
+func (scene *Scene) NewTextureFromFilename(name string, fileName string) (*Texture, error) {
 	imgFile, err := os.Open(fileName)
 	if err != nil {
 		return nil, err
 	}
-	return scene.NewTextureFile(name, imgFile)
+	return scene.NewTextureFromFile(name, imgFile)
 }
 
-func (scene *Scene) NewTextureFile(name string, file *os.File) (*Texture, error) {
+func (scene *Scene) NewTextureFromFile(name string, file *os.File) (*Texture, error) {
 	img, _, err := image.Decode(file)
 	if err != nil {
 		return nil, err
