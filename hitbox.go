@@ -19,7 +19,11 @@ func (hitbox *HitBox) Start(gameObject *GameObject) {
 	}
 	hitbox.gameObject = gameObject
 }
-func (hitbox *HitBox) Update(gameObject *GameObject) {}
+
+func (hitbox *HitBox) Update(gameObject *GameObject) {
+	// for each hitbox (excluded myself)
+	// check for intersection and generate an event
+}
 
 func (hitbox *HitBox) SetAttr(attr string, value interface{}) error {
 	return nil

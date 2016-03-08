@@ -12,11 +12,10 @@ import (
 )
 
 type TileMap struct {
-	mesh          *Mesh
-	texture       *Texture
+	mesh    *Mesh
+	texture *Texture
 
 	pixelsPerUnit uint32
-
 }
 
 func NewTileMap(texture *Texture) *TileMap {
@@ -28,42 +27,42 @@ func NewTileMap(texture *Texture) *TileMap {
 
 func (tilemap *TileMap) Start(gameObject *GameObject) {
 	if shader == -1 {
-                shader = int32(GLShader())
-        }
-        mesh := Mesh{}
+		shader = int32(GLShader())
+	}
+	mesh := Mesh{}
 
-        mesh.abid = GLNewArray()
-        mesh.vbid = GLNewBuffer()
-        mesh.uvbid = GLNewBuffer()
+	mesh.abid = GLNewArray()
+	mesh.vbid = GLNewBuffer()
+	mesh.uvbid = GLNewBuffer()
 
 	//for y := 0; y > -30; y-- {
-		//for x := 0; x < 170; x++ {
+	//for x := 0; x < 170; x++ {
 	for y := float32(0); y > -5; y-- {
 		for x := float32(0); x < 7; x++ {
 			// x -1
-			mesh.vertices = append(mesh.vertices, 2 * x - 1)
+			mesh.vertices = append(mesh.vertices, 2*x-1)
 			// y -1
-			mesh.vertices = append(mesh.vertices, 2 * y - 1)
+			mesh.vertices = append(mesh.vertices, 2*y-1)
 			// x -1
-			mesh.vertices = append(mesh.vertices, 2 * x - 1)
+			mesh.vertices = append(mesh.vertices, 2*x-1)
 			// y 1
-			mesh.vertices = append(mesh.vertices, 2 * y + 1)
+			mesh.vertices = append(mesh.vertices, 2*y+1)
 			// x 1
-			mesh.vertices = append(mesh.vertices, 2 * x + 1)
+			mesh.vertices = append(mesh.vertices, 2*x+1)
 			// y -1
-			mesh.vertices = append(mesh.vertices, 2 * y - 1)
+			mesh.vertices = append(mesh.vertices, 2*y-1)
 			// x 1
-			mesh.vertices = append(mesh.vertices, 2 * x + 1)
+			mesh.vertices = append(mesh.vertices, 2*x+1)
 			// y -1
-			mesh.vertices = append(mesh.vertices, 2 * y - 1)
+			mesh.vertices = append(mesh.vertices, 2*y-1)
 			// x 1
-			mesh.vertices = append(mesh.vertices, 2 * x + 1)
+			mesh.vertices = append(mesh.vertices, 2*x+1)
 			// y 1
-			mesh.vertices = append(mesh.vertices, 2 * y + 1)
+			mesh.vertices = append(mesh.vertices, 2*y+1)
 			// x -1
-			mesh.vertices = append(mesh.vertices, 2 * x - 1)
+			mesh.vertices = append(mesh.vertices, 2*x-1)
 			// y 1
-			mesh.vertices = append(mesh.vertices, 2 * y + 1)
+			mesh.vertices = append(mesh.vertices, 2*y+1)
 
 			mesh.uvs = append(mesh.uvs, 0)
 			mesh.uvs = append(mesh.uvs, 1.0/11)
@@ -85,13 +84,13 @@ func (tilemap *TileMap) Start(gameObject *GameObject) {
 		}
 	}
 
-        mesh.mulColor = mgl32.Vec4{1, 1, 1, 1}
+	mesh.mulColor = mgl32.Vec4{1, 1, 1, 1}
 
-        GLBufferData(0, mesh.vbid, mesh.vertices)
+	GLBufferData(0, mesh.vbid, mesh.vertices)
 
-        GLBufferData(1, mesh.uvbid, mesh.uvs)
+	GLBufferData(1, mesh.uvbid, mesh.uvs)
 
-        tilemap.mesh = &mesh
+	tilemap.mesh = &mesh
 }
 
 func (tilemap *TileMap) Update(gameObject *GameObject) {
@@ -106,16 +105,16 @@ func (tilemap *TileMap) Update(gameObject *GameObject) {
 	//height = float32(texture.Height) / float32(texture.Rows) / float32(tilemap.pixelsPerUnit) / 2
 
 	// recompute uvs based on index
-/*
-	idxX := tilemap.index % texture.Cols
-	idxY := tilemap.index / texture.Cols
+	/*
+		idxX := tilemap.index % texture.Cols
+		idxY := tilemap.index / texture.Cols
 
-	uvw := (1.0 / float32(texture.Cols))
-	uvh := (1.0 / float32(texture.Rows))
+		uvw := (1.0 / float32(texture.Cols))
+		uvh := (1.0 / float32(texture.Rows))
 
-	uvx := uvw * float32(idxX)
-	uvy := uvh * float32(idxY)
-*/
+		uvx := uvw * float32(idxX)
+		uvy := uvh * float32(idxY)
+	*/
 
 	var uvx float32 = 0
 	var uvy float32 = 0

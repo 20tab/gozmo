@@ -1,20 +1,20 @@
 package gozmo
 
 import (
-        "github.com/go-gl/mathgl/mgl32"
+	"github.com/go-gl/mathgl/mgl32"
 )
 
 type Mesh struct {
-        vertices []float32
-        uvs      []float32
+	vertices []float32
+	uvs      []float32
 
-        vbid  uint32
-        uvbid uint32
+	vbid  uint32
+	uvbid uint32
 
-        abid uint32
+	abid uint32
 
-        addColor mgl32.Vec4
-        mulColor mgl32.Vec4
+	addColor mgl32.Vec4
+	mulColor mgl32.Vec4
 }
 
 // points to the shader id
