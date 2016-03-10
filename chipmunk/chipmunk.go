@@ -1,15 +1,10 @@
+// The chipmunk package allows using the Chipmunk physical engine in a game.
+// TODO: manage disabled objects.
 package chipmunk
-
-/*
-
-	Physic engine
-
-	TODO manage disabled objects
-
-*/
 
 import (
 	"fmt"
+
 	goz "github.com/20tab/gozmo"
 	"github.com/vova616/chipmunk"
 	"github.com/vova616/chipmunk/vect"
@@ -26,7 +21,8 @@ func checkSpace() {
 	}
 }
 
-// Rigid Body
+// Rigid body.
+
 type RigidBody struct {
 	body        *chipmunk.Body
 	weight      float32
@@ -84,7 +80,8 @@ func initRigidBody(args []interface{}) goz.Component {
 	return NewRigidBody(1)
 }
 
-// Static Body
+// Static body.
+
 type StaticBody struct {
 	body        *chipmunk.Body
 	initialized bool
@@ -121,7 +118,8 @@ func initStaticBody(args []interface{}) goz.Component {
 	return NewStaticBody()
 }
 
-// Shape Circle
+// Circle shape.
+
 type ShapeCircle struct {
 	shape       *chipmunk.CircleShape
 	initialized bool
@@ -191,12 +189,13 @@ func NewShapeCircle() goz.Component {
 	return &circle
 }
 
-// TODO pass the radius as argument
+// TODO: pass the radius as argument.
 func initShapeCircle(args []interface{}) goz.Component {
 	return NewShapeCircle()
 }
 
-// Shape Box
+// Box shape.
+
 type ShapeBox struct {
 	shape       *chipmunk.BoxShape
 	initialized bool
@@ -272,12 +271,12 @@ func NewShapeBox() goz.Component {
 	return &box
 }
 
-// TODO pass width and height
+// TODO: pass width and height.
 func initShapeBox(args []interface{}) goz.Component {
 	return NewShapeBox()
 }
 
-// this will be called at every world update
+// updateWorld is called at each world update.
 func updateWorld(scene *goz.Scene, deltaTime float32) {
 	if space == nil {
 		return

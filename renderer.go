@@ -1,18 +1,13 @@
 package gozmo
 
-/*
-
-this is an accelerated sprite drawer component
-
-It supports color addition and multiplication
-
-*/
-
 import (
 	"fmt"
+
 	"github.com/go-gl/mathgl/mgl32"
 )
 
+// A Rendered is an accelerated sprite drawer component. It supports color
+// addition and multiplication
 type Renderer struct {
 	mesh          *Mesh
 	texture       *Texture
@@ -22,7 +17,7 @@ type Renderer struct {
 	forceHeight   float32
 }
 
-// the mesh is created and uploaded into the GPU only when needed
+// The mesh is created and uploaded into the GPU only when needed.
 func (renderer *Renderer) createMesh() {
 	if shader == -1 {
 		shader = int32(GLShader())
@@ -57,7 +52,7 @@ func (renderer *Renderer) createMesh() {
 }
 
 func NewRenderer(texture *Texture) *Renderer {
-	// default 100 pixels per unit (like in Unity3D)
+	// Default is 100 pixels per unit (like in Unity3D).
 	renderer := Renderer{texture: texture, pixelsPerUnit: 100}
 
 	if texture != nil {
@@ -88,7 +83,7 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 
 	texture := renderer.texture
 
-	// recompute mesh size based on the texture
+	// Recompute the mesh size based on the texture.
 	var width float32
 	var height float32
 	if renderer.forceHeight > 0 {
@@ -99,14 +94,14 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 		height = float32(texture.Height) / float32(texture.Rows) / float32(renderer.pixelsPerUnit) / 2
 	}
 
-	// out-of-view culling, avoid drawing quads that are out of the view quad
-	// extract view sizes
+	// Out-of-view culling, avoids drawing quads that are out of the view quad
+	// extract view sizes.
 	viewWidth := Engine.Window.OrthographicSize * Engine.Window.AspectRatio * 2
 	viewHeight := Engine.Window.OrthographicSize * 2
 	viewX := -Engine.Window.View[12] - (viewWidth / 2)
 	viewY := -Engine.Window.View[13] + (viewHeight / 2)
 
-	// now check if the object bounds are out of the view
+	// Check if the object bounds are out of the view.
 	objX := gameObject.Position[0] - width
 	objY := gameObject.Position[1] + height
 	if (objX+(width*2)) < viewX ||
@@ -116,7 +111,7 @@ func (renderer *Renderer) Update(gameObject *GameObject) {
 		return
 	}
 
-	// recompute uvs based on index
+	// Recompute uvs based on index.
 	idxX := renderer.index % texture.Cols
 	idxY := renderer.index / texture.Cols
 

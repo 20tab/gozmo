@@ -1,9 +1,10 @@
+// The lua package allows scripting the game using the Lua language.
 package lua
 
 import (
 	"fmt"
+
 	goz "github.com/20tab/gozmo"
-	"github.com/yuin/gopher-lua"
 )
 
 type Lua struct {

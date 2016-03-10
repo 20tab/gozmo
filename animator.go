@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// The Animator component applies animations to gameObjects.
 type Animator struct {
 	currentAnimation string
 	isPlaying        bool
@@ -43,7 +44,7 @@ func (animator *Animator) Update(gameObject *GameObject) {
 		// force drawing of the frame
 		animator.frameApplied = false
 
-		// new animation ?
+		// Is it a new animation?
 		if animator.currentFrame == -1 {
 			if animation.Fps >= 0 {
 				animator.currentFrame = 0
@@ -51,7 +52,7 @@ func (animator *Animator) Update(gameObject *GameObject) {
 				animator.currentFrame = len(animation.Frames) - 1
 			}
 		} else {
-			// switch frame
+			// Switch frame.
 			if animation.Fps > 0 {
 				animator.currentFrame++
 			} else if animation.Fps < 0 {
@@ -59,7 +60,7 @@ func (animator *Animator) Update(gameObject *GameObject) {
 			}
 		}
 
-		// positive FPS
+		// Positive FPS.
 		if animator.currentFrame >= len(animation.Frames) {
 			if animation.Loop == false {
 				animator.currentFrame--
@@ -68,7 +69,7 @@ func (animator *Animator) Update(gameObject *GameObject) {
 			animator.currentFrame = 0
 		}
 
-		// negative FPS
+		// Negative FPS.
 		if animator.currentFrame < 0 {
 			if animation.Loop == false {
 				animator.currentFrame = 0
@@ -94,14 +95,14 @@ func (animator *Animator) Update(gameObject *GameObject) {
 		}
 		animator.frameApplied = true
 	} else {
-		// check for interpolation
+		// Check for interpolation.
 		frame := animation.Frames[animator.currentFrame]
 		for aid, action := range frame.actions {
 			if action == nil {
 				continue
 			}
 			if action.Interpolate {
-				// This is required only if we want to linear interpolate
+				// This is only required if we want to interpolate linearly.
 				/*
 				   currentValue, err := gameObject.GetAttr(action.ComponentName, action.Attr)
 				   if err != nil {
@@ -114,7 +115,7 @@ func (animator *Animator) Update(gameObject *GameObject) {
 				       continue
 				   }
 				*/
-				// get the next frame
+				// Get the next frame.
 				var nextFrame int
 				if animation.Fps >= 0 {
 					nextFrame = animator.currentFrame + 1
@@ -136,7 +137,8 @@ func (animator *Animator) Update(gameObject *GameObject) {
 					nextFrame = 0
 				}
 
-				// we have the next frame, check if an action is available in the same position
+				// Got the next frame, check if an action is available
+				// in the same position.
 				if aid >= len(animation.Frames[nextFrame].actions) {
 					continue
 				}
@@ -153,14 +155,14 @@ func (animator *Animator) Update(gameObject *GameObject) {
 					continue
 				}
 
-				// get the value of the next action
+				// Get the next action value.
 				nextValue, ok := nextAction.Value.(float32)
 				if !ok {
 					fmt.Println("error while interpolating %v: not a float32", nextAction.Attr)
 					continue
 				}
 
-				// now compute the gradient based on deltaT
+				// Compute the gradient based on deltaT.
 				var gradient, interpolatedValue float32
 				frameTime := float32(math.Abs(1.0 / float64(animation.Fps)))
 				gradient = (1.0 / frameTime) * (frameTime - animator.deltaT)

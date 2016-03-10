@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	goz "github.com/20tab/gozmo"
 )
 
@@ -61,7 +62,7 @@ func main() {
 	camera.AddComponent("cage", goz.NewCage(0, 0, -20, rightLimit))
 
 	stats := scene.NewGameObject("Stats")
-	// ensure stats are managed last
+	// Ensure stats are managed last.
 	stats.SetOrder(9999)
 	stats.AddComponent("stats", &DrawCallsPrinter{})
 

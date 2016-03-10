@@ -4,11 +4,13 @@ package gozmo
 
 import (
 	"fmt"
+	"image"
+
 	"github.com/go-gl/gl/v4.1-core/gl"
 	"github.com/go-gl/mathgl/mgl32"
-	"image"
 )
 
+// OpenGL 4.1 wrappers.
 func GLInit(width int32, height int32) {
 	if err := gl.Init(); err != nil {
 		panic(err)

@@ -1,10 +1,8 @@
 package gozmo
 
-// the HitBox component is a generic AABB checker
-// can be used for basic collisions or area triggers
-
+// The HitBox component is a generic AABB checker that can be used for basic
+// collisions or area triggers. It can be attached to only one GameObject.
 type HitBox struct {
-	// an hitbox can be attached only to a single GameObject
 	gameObject *GameObject
 	xOffset    float32
 	yOffset    float32
@@ -21,8 +19,8 @@ func (hitbox *HitBox) Start(gameObject *GameObject) {
 }
 
 func (hitbox *HitBox) Update(gameObject *GameObject) {
-	// for each hitbox (excluded myself)
-	// check for intersection and generate an event
+	// For each hitbox (excluding myself), check for intersections and generate
+	// an event.
 }
 
 func (hitbox *HitBox) SetAttr(attr string, value interface{}) error {
@@ -50,7 +48,7 @@ func initHitBox(args []interface{}) Component {
 	if len(args) < 4 {
 		panic("you need to specify the hitbox size")
 	}
-	// TODO check for errors ?
+	// TODO: check for errors?
 	x, _ := CastFloat32(args[0])
 	y, _ := CastFloat32(args[1])
 	width, _ := CastFloat32(args[2])

@@ -2,14 +2,16 @@ package gozmo
 
 import (
 	"fmt"
-	"github.com/go-gl/mathgl/mgl32"
 	"math"
 	"sort"
+
+	"github.com/go-gl/mathgl/mgl32"
 )
 
+// A GameObject stores all graphic parameters.
 type GameObject struct {
-	// TODO is it a good idea to allow the developer to change the game object name
-	// and messing with internal data ?
+	// TODO: is it a good idea to allow the developer to change the game object
+	// name and mess with internal data?
 	Name    string
 	enabled bool
 	order   int
@@ -33,12 +35,12 @@ func (scene *Scene) NewGameObject(name string) *GameObject {
 	gameObject := GameObject{Name: name, order: 0}
 	gameObject.components = make(map[string]Component)
 	gameObject.customAttrs = make(map[string]interface{})
-	// a game object always starts as enabled
+	// A game object always starts as enabled.
 	gameObject.enabled = true
 	gameObject.Scene = scene
 	gameObject.Scale = mgl32.Vec2{1, 1}
 	scene.gameObjects[name] = &gameObject
-	// a -1 index means a still not mapped gameObject
+	// A -1 index means a not yet mapped gameObject.
 	gameObject.index = -1
 	gameObject.SetOrder(0)
 	return &gameObject
@@ -68,24 +70,24 @@ func (gameObject *GameObject) SetOrder(order int) {
 	scene := gameObject.Scene
 	_, ok := scene.orderedGameObjects[order]
 	if !ok {
-		// create a new slice of gameObjects
+		// Create a new slice of gameObjects.
 		scene.orderedGameObjects[order] = make([]*GameObject, 0)
-		// add the new key (a number)
+		// Cdd the new key (a number).
 		scene.orderedKeys = append(scene.orderedKeys, order)
-		// sort them
+		// Sort them.
 		sort.Ints(scene.orderedKeys)
 	}
 
 	if gameObject.index > -1 {
 		scene.orderedGameObjects[gameObject.order] = append(scene.orderedGameObjects[gameObject.order][:gameObject.index], scene.orderedGameObjects[gameObject.order][gameObject.index+1:]...)
-		// NOTE it would be cool to remove an unused order layer, but it will make things really complex...
-		// just remove the gameObject from the list
+		// NOTE: it would be cool to remove an unused order layer, but it would
+		// make things quite complex. Just remove the gameObject from the list.
 	}
-	// set the index (for future removal)
+	// Set the index (for future removal).
 	gameObject.index = len(scene.orderedGameObjects[order])
-	// set new order
+	// Set the new order.
 	gameObject.order = order
-	// append it
+	// Append it.
 	scene.orderedGameObjects[order] = append(scene.orderedGameObjects[order], gameObject)
 }
 
@@ -163,7 +165,7 @@ func (gameObject *GameObject) setAttr(attr string, value interface{}) error {
 	case "order":
 		o, _ := CastInt(value)
 		gameObject.SetOrder(o)
-	// TODO implement SetName() to maintain mappings and checking for duplicates
+	// TODO: implement SetName() to maintain mappings and check for duplicates.
 	case "name":
 		name, ok := value.(string)
 		if ok {
@@ -201,12 +203,12 @@ func (gameObject *GameObject) getAttr(attr string) (interface{}, error) {
 }
 
 func (gameObject *GameObject) SetAttr(componentName string, attr string, value interface{}) error {
-	// base component ?
+	// Is it a base component?
 	if componentName == "" {
 		return gameObject.setAttr(attr, value)
 	}
 
-	// custom attrs ?
+	// A custom attribute?
 	if componentName == "{}" {
 		gameObject.customAttrs[attr] = value
 		return nil
@@ -220,12 +222,12 @@ func (gameObject *GameObject) SetAttr(componentName string, attr string, value i
 }
 
 func (gameObject *GameObject) GetAttr(componentName string, attr string) (interface{}, error) {
-	// base component ?
+	// Is it a base component?
 	if componentName == "" {
 		return gameObject.getAttr(attr)
 	}
 
-	// custom attrs ?
+	// A custom attribute?
 	if componentName == "{}" {
 		v, ok := gameObject.customAttrs[attr]
 		if !ok {
@@ -242,5 +244,5 @@ func (gameObject *GameObject) GetAttr(componentName string, attr string) (interf
 }
 
 func (gameObject *GameObject) Destroy() {
-	// call Destroy() on all associated components
+	// Call Destroy() on all associated components.
 }

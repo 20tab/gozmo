@@ -1,19 +1,15 @@
 package gozmo
 
-/*
-
-a simple tilemap tilemap using a single mesh for the whole level
-
-*/
-
 import (
 	"encoding/csv"
 	_ "fmt"
-	"github.com/go-gl/mathgl/mgl32"
 	"os"
 	"strconv"
+
+	"github.com/go-gl/mathgl/mgl32"
 )
 
+// A TileMap is a simple map of tiles using a single mesh for the whole level.
 type TileMap struct {
 	mesh    *Mesh
 	texture *Texture
@@ -24,7 +20,7 @@ type TileMap struct {
 }
 
 func NewTileMap(texture *Texture) *TileMap {
-	// default 100 pixels per unit (like in Unity3D)
+	// Default is 100 pixels per unit (like in Unity3D).
 	tilemap := TileMap{texture: texture, pixelsPerUnit: 100}
 	return &tilemap
 }
@@ -148,7 +144,7 @@ func (tilemap *TileMap) Update(gameObject *GameObject) {
 	//width = float32(texture.Width) / float32(texture.Cols) / float32(tilemap.pixelsPerUnit) / 2
 	//height = float32(texture.Height) / float32(texture.Rows) / float32(tilemap.pixelsPerUnit) / 2
 
-	// recompute uvs based on index
+	// Recompute uvs based on index.
 	/*
 		idxX := tilemap.index % texture.Cols
 		idxY := tilemap.index / texture.Cols

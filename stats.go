@@ -1,7 +1,6 @@
 package gozmo
 
-// there are (currently) three kind of stats: per-frame, per-second and global
-
+// Currently there are three kind of stats: per-frame, per-second and global.
 func checkPerFrameStats(name string) {
 	if Engine.perFrameStats == nil {
 		Engine.perFrameStats = make(map[string]float64)

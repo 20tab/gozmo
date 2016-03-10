@@ -21,7 +21,7 @@ func CastBool(value interface{}) (bool, error) {
 	if ok {
 		return flag, nil
 	}
-	// special case for allowing numbers as boolean
+	// Special case for allowing numbers as boolean.
 	num, err := CastFloat32(value)
 	if err == nil {
 		return num != 0, nil
