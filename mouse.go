@@ -2,15 +2,13 @@
 
 package gozmo
 
-/*
-
- */
-
 import (
 	_ "github.com/go-gl/glfw/v3.1/glfw"
 	"github.com/go-gl/mathgl/mgl32"
 )
 
+// The Mouse component converts screen coordinates into game coordinates. It
+// only handles mouse events, not touch ones, and is not bound on Android.
 type Mouse struct{}
 
 func (mouse *Mouse) Start(gameObject *GameObject)  {}
@@ -41,7 +39,7 @@ func (mouse *Mouse) Y() float32 {
 	return 0
 }
 
-// what to do if the user specifies an unknown key ?
+// TODO: what if the user specifies an unknown key?
 func (mouse *Mouse) GetAttr(attr string) (interface{}, error) {
 	return 0, nil
 }

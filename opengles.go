@@ -4,13 +4,15 @@ package gozmo
 
 import (
 	"fmt"
+	"image"
+
 	"github.com/go-gl/mathgl/mgl32"
 	"golang.org/x/mobile/gl"
-	"image"
 )
 
 var glctx gl.Context
 
+// OpenGL ES wrappers.
 func GLInit(width int32, height int32) {
 
 	version := glctx.GetString(gl.VERSION)
@@ -56,7 +58,7 @@ func GLNewBuffer() uint32 {
 	return bid.Value
 }
 
-// OpenGL ES has no VAO :(
+// OpenGL ES has no VAO. :(
 func GLNewArray() uint32 {
 	return 0
 }

@@ -4,10 +4,15 @@ package gozmo
 
 import (
 	"golang.org/x/mobile/app"
+	"golang.org/x/mobile/event/lifecycle"
+	"golang.org/x/mobile/event/paint"
+	"golang.org/x/mobile/gl"
 )
 
 type Key int
 
+// The Window type interfaces with the display hardware using OpenGL.
+// Coordinates are 0, 0 at screen center.
 type Window struct {
 	width        int32
 	height       int32

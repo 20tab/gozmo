@@ -2,10 +2,11 @@ package gozmo
 
 import (
 	_ "fmt"
+
 	"github.com/go-gl/mathgl/mgl32"
 )
 
-// An alternative renderer used for simple solid-color boxes
+// BoxRenderer is an alternative renderer used for simple solid-color boxes.
 type BoxRenderer struct {
 	mesh *Mesh
 
@@ -15,7 +16,7 @@ type BoxRenderer struct {
 
 func (box *BoxRenderer) Start(gameObject *GameObject) {}
 
-// boxes are created directly in the setup phase
+// Boxes are created at setup.
 func NewBoxRenderer(width, height float32) *BoxRenderer {
 	box := BoxRenderer{Width: width, Height: height}
 

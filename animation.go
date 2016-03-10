@@ -11,6 +11,7 @@ type AnimationFrame struct {
 	actions []*AnimationAction
 }
 
+// An Animation holds data structures that change gameObject attributes.
 type Animation struct {
 	Name   string
 	Fps    int

@@ -1,18 +1,12 @@
 package gozmo
 
-/*
-
-Camera component
-
-ensure cameras are always managed befre the other items
-by setting them a lower order
-
-*/
-
 import (
 	"github.com/go-gl/mathgl/mgl32"
 )
 
+// The Camera component sets the current view matrix for rendering, allowing
+// different views to coexist. It ensures that cameras are always managed
+// before other items by setting them at at lower place.
 type Camera struct{}
 
 func (camera *Camera) Start(gameObject *GameObject) {}

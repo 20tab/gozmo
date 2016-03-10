@@ -17,5 +17,5 @@ type Mesh struct {
 	mulColor mgl32.Vec4
 }
 
-// points to the shader id
+// Points to the shader id.
 var shader int32 = -1

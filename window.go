@@ -3,12 +3,15 @@
 package gozmo
 
 import (
-	"github.com/go-gl/glfw/v3.1/glfw"
-	"github.com/go-gl/mathgl/mgl32"
 	"log"
 	"runtime"
+
+	"github.com/go-gl/glfw/v3.1/glfw"
+	"github.com/go-gl/mathgl/mgl32"
 )
 
+// The Window type interfaces with the display hardware using OpenGL.
+// Coordinates are 0, 0 at screen center.
 type Window struct {
 	width        int32
 	height       int32

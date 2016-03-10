@@ -2,17 +2,12 @@
 
 package gozmo
 
-/*
-
-Keyboard mappins, by default we will use the glfw names
-but we need to duplicate them to support more platforms in the future
-
-*/
-
 import (
 	"github.com/go-gl/glfw/v3.1/glfw"
 )
 
+// A Key is a keyboard mapping. By default we use the glfw names, but override
+// them to support more platforms in the future. Not bound on Android.
 type Key glfw.Key
 
 const (
@@ -33,12 +28,7 @@ const (
 	KeyEsc Key = Key(glfw.KeyEscape)
 )
 
-/*
-
-yeah, this mapping is pretty ugly, but will simplify
-the "compositors" life
-
-*/
+// Rather ugly mapping, but it will simplify the "compositor's" life.
 var KeyboardAttr map[string]Key = map[string]Key{
 	"A":     KeyA,
 	"D":     KeyD,
@@ -50,6 +40,7 @@ var KeyboardAttr map[string]Key = map[string]Key{
 	"Down":  KeyDown,
 }
 
+// A Keyboard works by polling at a given time.
 type Keyboard struct{}
 
 func (keyboard *Keyboard) Start(gameObject *GameObject)  {}
@@ -67,7 +58,7 @@ func (keyboard *Keyboard) GetKey(key Key) bool {
 	return Engine.Window.getKey(key)
 }
 
-// what to do if the user specifies an unknown key ?
+// TODO: what if the user specifies an unknown key?
 func (keyboard *Keyboard) GetAttr(attr string) (interface{}, error) {
 	key, ok := KeyboardAttr[attr]
 	if !ok {

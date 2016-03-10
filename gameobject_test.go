@@ -19,14 +19,14 @@ func TestChangeOrdering(t *testing.T) {
 	if gameObject.order != 17 {
 		t.Error("Expected 17, got ", gameObject.order)
 	}
-	// ensure order mappings are available
+	// Ensure that order mappings are available.
 	if len(scene.orderedGameObjects[17]) != 1 {
 		t.Error("Expected 1, got ", len(scene.orderedGameObjects[17]))
 	}
 	if len(scene.orderedGameObjects[0]) != 0 {
 		t.Error("Expected 0, got ", len(scene.orderedGameObjects[0]))
 	}
-	// change order again
+	// Change the order again.
 	gameObject.SetOrder(30)
 	if len(scene.orderedGameObjects[17]) != 0 {
 		t.Error("Expected 0, got ", len(scene.orderedGameObjects[17]))

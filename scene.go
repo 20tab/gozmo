@@ -1,27 +1,23 @@
 package gozmo
 
-/*
-
-A Scene is a group of resources (textures, animations, sounds)
-and instantiated GameObjects
-
-When a scene is destroyed, all of the allocated resources and GameObjects are destroyed.
-
-*/
-
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 )
 
+// A Scene is a group of resources (textures, animations, sounds) and
+// instantiated gameObjects, akin to levels in games.
+//
+// When a scene is destroyed, all of the allocated resources and gameObjects
+// are destroyed too.
 type Scene struct {
-	// TODO is it a good idea to expose Name ?
+	// TODO: is it a good idea to expose Name?
 	Name        string
 	gameObjects map[string]*GameObject
 	textures    map[string]*Texture
 	animations  map[string]*Animation
-	// this contains the last timestamp of the engine
+	// The last timestamp of the engine.
 	lastTime           float64
 	orderedGameObjects map[int][]*GameObject
 	orderedKeys        []int
@@ -271,16 +267,16 @@ func NewSceneFromFilename(fileName string) *Scene {
 }
 
 func (scene *Scene) Destroy() {
-	// first of all destroy objects
+	// Destroy all objects.
 	for _, gameObject := range scene.gameObjects {
 		gameObject.Destroy()
 	}
 
-	// the destroy textures
+	// Destroy all textures.
 	for _, texture := range scene.textures {
 		texture.Destroy()
 	}
 
-	// remove the scene from the map, so the GC can make its job
+	// Remove the scene from the map, so that the GC can reclaim it.
 	delete(Engine.scenes, scene.Name)
 }

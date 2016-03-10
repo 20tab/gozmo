@@ -1,8 +1,7 @@
 package gozmo
 
-// The Cage component allows you to limit the position of GameObjects
-// ensure to place it after the components you want to limit
-
+// The Cage component constrains the position of gameObjects to a given area.
+// Place it after the components you want to limit.
 type Cage struct {
 	top    float32
 	left   float32
@@ -51,7 +50,7 @@ func initCage(args []interface{}) Component {
 	if len(args) < 4 {
 		panic("you need to specify the cage size")
 	}
-	// TODO check for errors ?
+	// TODO: check for errors?
 	top, _ := CastFloat32(args[0])
 	left, _ := CastFloat32(args[1])
 	bottom, _ := CastFloat32(args[2])
