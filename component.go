@@ -25,7 +25,3 @@ type ComponentDestroy interface {
 type ComponentType interface {
 	GetType() string
 }
-
-type ComponentEvent interface {
-	OnEvent(gameObject *GameObject, sender *GameObject, eventName string)
-}

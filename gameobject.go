@@ -29,6 +29,8 @@ type GameObject struct {
 	componentsKeys []string
 
 	customAttrs map[string]interface{}
+
+	events []*Event
 }
 
 func (scene *Scene) NewGameObject(name string) *GameObject {
@@ -241,6 +243,12 @@ func (gameObject *GameObject) GetAttr(componentName string, attr string) (interf
 		return nil, fmt.Errorf("component %v not found", componentName)
 	}
 	return component.GetAttr(attr)
+}
+
+func (gameObject *GameObject) Update() {
+	for _, key := range gameObject.componentsKeys {
+		gameObject.components[key].Update(gameObject)
+	}
 }
 
 func (gameObject *GameObject) Destroy() {

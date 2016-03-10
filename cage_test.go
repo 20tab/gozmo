@@ -11,6 +11,6 @@ func TestCageEscape(t *testing.T) {
 	gameObject.Position[0] = -2
 	scene.Update(0)
 	if gameObject.Position[0] != -1 {
-		t.Error("Expected -1, got ", gameObject.Position[0])
+		t.Error("Expected -1, got", gameObject.Position[0])
 	}
 }

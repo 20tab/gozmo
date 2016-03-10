@@ -11,6 +11,8 @@ type HitBox struct {
 	raiseEvent string
 }
 
+var hitBoxes []*HitBox
+
 func (hitbox *HitBox) Start(gameObject *GameObject) {
 	if hitbox.gameObject != nil {
 		panic("HitBox component cannot be attached to multiple GameObjects")
@@ -18,9 +20,22 @@ func (hitbox *HitBox) Start(gameObject *GameObject) {
 	hitbox.gameObject = gameObject
 }
 
+func (hitbox *HitBox) Intersect(otherBox *HitBox) bool {
+	return true
+}
+
 func (hitbox *HitBox) Update(gameObject *GameObject) {
 	// For each hitbox (excluding myself), check for intersections and generate
-	// an event.
+	// events
+	for _, hbox := range hitBoxes {
+		if hbox == hitbox {
+			continue
+		}
+		if hitbox.Intersect(hbox) {
+			// hitboxes are colliding, raise events
+			// on both objects
+		}
+	}
 }
 
 func (hitbox *HitBox) SetAttr(attr string, value interface{}) error {
@@ -41,6 +56,7 @@ func NewHitBox(xOffset, yOffset, width, height float32) *HitBox {
 	hitbox.yOffset = yOffset
 	hitbox.width = width
 	hitbox.height = height
+	hitBoxes = append(hitBoxes, &hitbox)
 	return &hitbox
 }
 

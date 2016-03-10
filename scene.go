@@ -33,9 +33,13 @@ func (scene *Scene) Update(now float64) {
 				continue
 			}
 			gameObject.DeltaTime = deltaTime
-			for _, key := range gameObject.componentsKeys {
-				gameObject.components[key].Update(gameObject)
-			}
+
+			// consume enqueued events
+			gameObject.ManageEvents()
+
+			// call Update() on components
+			gameObject.Update()
+
 		}
 	}
 
