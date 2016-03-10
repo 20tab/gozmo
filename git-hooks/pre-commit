@@ -1,3 +1,5 @@
 #!/bin/sh
 echo "[go] formatting checks..."
 go fmt ./...
+echo "[go] running tests..."
+go test -v -cover

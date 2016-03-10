@@ -34,6 +34,12 @@ func (hitbox *HitBox) Update(gameObject *GameObject) {
 		if hitbox.Intersect(hbox) {
 			// hitboxes are colliding, raise events
 			// on both objects
+			if hbox.raiseEvent != "" {
+				gameObject.EnqueueEvent(hbox.gameObject, hbox.raiseEvent)
+			}
+			if hitbox.raiseEvent != "" {
+				hbox.gameObject.EnqueueEvent(gameObject, hitbox.raiseEvent)
+			}
 		}
 	}
 }
