@@ -9,7 +9,7 @@ type CollisionCheck struct{}
 
 func (check *CollisionCheck) Start(gameObject *goz.GameObject) {}
 func (check *CollisionCheck) Update(gameObject *goz.GameObject) {
-	var speed float32 = 3
+	var speed float32 = 10
 	if goz.IsTrue(gameObject.GetAttr("kbd", "Right")) {
 		gameObject.Position[0] += speed * gameObject.DeltaTime
 	}
@@ -36,6 +36,7 @@ func main() {
 	scene.NewTextureFromFilename("gozmo", "assets/gozmo.png")
 
 	gozmo := scene.NewGameObject("Gozmo")
+	gozmo.AddComponent("rewind", goz.NewRewind("wall"))
 	gozmo.AddComponent("check", &CollisionCheck{})
 	gozmo.AddComponent("kbd", goz.NewKeyboard())
 	gozmo.AddComponent("renderer", goz.NewRenderer(nil))
@@ -74,6 +75,15 @@ func main() {
 	obstacle3.SetAttr("box", "blue", 1)
 	obstacle3.SetAttr("box", "alpha", 1)
 	obstacle3.AddComponent("hit", goz.NewHitBoxWithEvent(0, 0, 4, 4, "blue hit"))
+
+	wall := scene.NewGameObject("Wall")
+	wall.SetAttr("", "positionX", -10)
+	wall.SetAttr("", "positionY", 2)
+	wall.AddComponent("box", goz.NewBoxRenderer(2, 8))
+	wall.SetAttr("box", "blue", 1)
+	wall.SetAttr("box", "green", 1)
+	wall.SetAttr("box", "alpha", 1)
+	wall.AddComponent("hit", goz.NewHitBoxWithEvent(0, 0, 2, 8, "wall"))
 
 	window.SetScene(scene)
 	window.Run()

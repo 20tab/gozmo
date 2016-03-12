@@ -26,22 +26,21 @@ func (hitbox *HitBox) Start(gameObject *GameObject) {
 
 func (hitbox *HitBox) Intersect(otherBox *HitBox) bool {
 
-	x1 := hitbox.gameObject.Position[0] + hitbox.xOffset * hitbox.gameObject.Scale[0]
+	x1 := hitbox.gameObject.Position[0] + hitbox.xOffset*hitbox.gameObject.Scale[0]
 	x1 -= hitbox.width * hitbox.gameObject.Scale[0] / 2
-	y1 := hitbox.gameObject.Position[1] + hitbox.yOffset * hitbox.gameObject.Scale[1]
+	y1 := hitbox.gameObject.Position[1] + hitbox.yOffset*hitbox.gameObject.Scale[1]
 	y1 += hitbox.height * hitbox.gameObject.Scale[1] / 2
 
-	w1 := x1 + hitbox.width * hitbox.gameObject.Scale[0]
-	h1 := y1 - hitbox.height * hitbox.gameObject.Scale[1]
+	w1 := x1 + hitbox.width*hitbox.gameObject.Scale[0]
+	h1 := y1 - hitbox.height*hitbox.gameObject.Scale[1]
 
-	x2 := otherBox.gameObject.Position[0] + otherBox.xOffset * otherBox.gameObject.Scale[0]
+	x2 := otherBox.gameObject.Position[0] + otherBox.xOffset*otherBox.gameObject.Scale[0]
 	x2 -= otherBox.width * otherBox.gameObject.Scale[0] / 2
-	y2 := otherBox.gameObject.Position[1] + otherBox.yOffset * otherBox.gameObject.Scale[1]
+	y2 := otherBox.gameObject.Position[1] + otherBox.yOffset*otherBox.gameObject.Scale[1]
 	y2 += otherBox.height * otherBox.gameObject.Scale[1] / 2
 
-	w2 := x2 + otherBox.width * otherBox.gameObject.Scale[0]
-	h2 := y2 - otherBox.height * otherBox.gameObject.Scale[1]
-
+	w2 := x2 + otherBox.width*otherBox.gameObject.Scale[0]
+	h2 := y2 - otherBox.height*otherBox.gameObject.Scale[1]
 
 	if w1 < x2 {
 		return false
