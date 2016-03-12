@@ -1,7 +1,7 @@
 package gozmo
 
 import (
-	"fmt"
+	_ "fmt"
 	"github.com/go-gl/mathgl/mgl32"
 )
 
@@ -24,8 +24,6 @@ func (rewind *Rewind) OnEvent(gameObject *GameObject, event *Event) {
 	if event.Msg != rewind.event {
 		return
 	}
-
-	fmt.Println("rewinding...")
 
 	gameObject.Position = rewind.oldPosition
 	gameObject.Rotation = rewind.oldRotation

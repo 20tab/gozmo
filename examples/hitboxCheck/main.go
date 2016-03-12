@@ -37,18 +37,21 @@ func main() {
 
 	gozmo := scene.NewGameObject("Gozmo")
 	gozmo.AddComponent("rewind", goz.NewRewind("wall"))
-	gozmo.AddComponent("check", &CollisionCheck{})
-	gozmo.AddComponent("kbd", goz.NewKeyboard())
+
 	gozmo.AddComponent("renderer", goz.NewRenderer(nil))
 	gozmo.SetAttr("renderer", "texture", "gozmo")
-	gozmo.SetAttr("", "scaleX", 0.25)
-	gozmo.SetAttr("", "scaleY", 0.25)
 
 	gozmo.AddComponent("box", goz.NewBoxRenderer(10, 10))
 	gozmo.SetAttr("box", "red", 0)
 	gozmo.SetAttr("box", "green", 1)
 	gozmo.SetAttr("box", "blue", 0)
 	gozmo.SetAttr("box", "alpha", 0.2)
+
+	gozmo.AddComponent("check", &CollisionCheck{})
+	gozmo.AddComponent("kbd", goz.NewKeyboard())
+
+	gozmo.SetAttr("", "scaleX", 0.25)
+	gozmo.SetAttr("", "scaleY", 0.25)
 
 	gozmo.AddComponent("hit", goz.NewHitBox(0, 0, 10, 10))
 
