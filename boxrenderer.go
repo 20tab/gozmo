@@ -61,17 +61,13 @@ func (box *BoxRenderer) Update(gameObject *GameObject) {
 
 func (box *BoxRenderer) SetAttr(attr string, value interface{}) error {
 	switch attr {
-	case "red":
-	case "r":
+	case "red", "r", "R":
 		box.mesh.addColor[0], _ = CastFloat32(value)
-	case "green":
-	case "g":
+	case "green", "g", "G":
 		box.mesh.addColor[1], _ = CastFloat32(value)
-	case "blue":
-	case "b":
+	case "blue", "b", "blu", "B":
 		box.mesh.addColor[2], _ = CastFloat32(value)
-	case "alpha":
-	case "a":
+	case "alpha", "a", "A":
 		box.mesh.addColor[3], _ = CastFloat32(value)
 	}
 	return nil

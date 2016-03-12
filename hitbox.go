@@ -1,5 +1,9 @@
 package gozmo
 
+import (
+	_ "fmt"
+)
+
 // The HitBox component is a generic AABB checker that can be used for basic
 // collisions or area triggers. It can be attached to only one GameObject.
 type HitBox struct {
@@ -21,6 +25,40 @@ func (hitbox *HitBox) Start(gameObject *GameObject) {
 }
 
 func (hitbox *HitBox) Intersect(otherBox *HitBox) bool {
+
+	x1 := hitbox.gameObject.Position[0] + hitbox.xOffset * hitbox.gameObject.Scale[0]
+	x1 -= hitbox.width * hitbox.gameObject.Scale[0] / 2
+	y1 := hitbox.gameObject.Position[1] + hitbox.yOffset * hitbox.gameObject.Scale[1]
+	y1 += hitbox.height * hitbox.gameObject.Scale[1] / 2
+
+	w1 := x1 + hitbox.width * hitbox.gameObject.Scale[0]
+	h1 := y1 - hitbox.height * hitbox.gameObject.Scale[1]
+
+	x2 := otherBox.gameObject.Position[0] + otherBox.xOffset * otherBox.gameObject.Scale[0]
+	x2 -= otherBox.width * otherBox.gameObject.Scale[0] / 2
+	y2 := otherBox.gameObject.Position[1] + otherBox.yOffset * otherBox.gameObject.Scale[1]
+	y2 += otherBox.height * otherBox.gameObject.Scale[1] / 2
+
+	w2 := x2 + otherBox.width * otherBox.gameObject.Scale[0]
+	h2 := y2 - otherBox.height * otherBox.gameObject.Scale[1]
+
+
+	if w1 < x2 {
+		return false
+	}
+
+	if h1 > y2 {
+		return false
+	}
+
+	if x1 > w2 {
+		return false
+	}
+
+	if y1 < h2 {
+		return false
+	}
+
 	return true
 }
 
@@ -66,6 +104,12 @@ func NewHitBox(xOffset, yOffset, width, height float32) *HitBox {
 	return &hitbox
 }
 
+func NewHitBoxWithEvent(xOffset, yOffset, width, height float32, event string) *HitBox {
+	hitbox := NewHitBox(xOffset, yOffset, width, height)
+	hitbox.raiseEvent = event
+	return hitbox
+}
+
 func initHitBox(args []interface{}) Component {
 	if len(args) < 4 {
 		panic("you need to specify the hitbox size")
@@ -75,7 +119,13 @@ func initHitBox(args []interface{}) Component {
 	y, _ := CastFloat32(args[1])
 	width, _ := CastFloat32(args[2])
 	height, _ := CastFloat32(args[3])
-	return NewHitBox(x, y, width, height)
+	event := ""
+	if len(args) > 4 {
+		event = args[4].(string)
+	}
+	hitbox := NewHitBox(x, y, width, height)
+	hitbox.raiseEvent = event
+	return hitbox
 }
 
 func init() {

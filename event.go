@@ -4,8 +4,8 @@ package gozmo
 // ComponentEvent interface.
 
 type Event struct {
-	sender *GameObject
-	msg    string
+	Sender *GameObject
+	Msg    string
 }
 
 type ComponentEvent interface {
@@ -13,7 +13,7 @@ type ComponentEvent interface {
 }
 
 func (gameObject *GameObject) EnqueueEvent(sender *GameObject, msg string) {
-	event := Event{sender: sender, msg: msg}
+	event := Event{Sender: sender, Msg: msg}
 	gameObject.events = append(gameObject.events, &event)
 }
 

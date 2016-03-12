@@ -254,3 +254,7 @@ func (gameObject *GameObject) Update() {
 func (gameObject *GameObject) Destroy() {
 	// Call Destroy() on all associated components.
 }
+
+func (gameObject *GameObject) String() string {
+	return gameObject.Name
+}
